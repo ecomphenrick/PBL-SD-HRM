@@ -1,0 +1,7 @@
+
+State Machine - |pbl|estado
+Name estado.ERROR estado.DONE estado.BUSY estado.READY 
+estado.READY 0 0 0 0 
+estado.BUSY 0 0 1 1 
+estado.DONE 0 1 0 1 
+estado.ERROR 1 0 0 1 

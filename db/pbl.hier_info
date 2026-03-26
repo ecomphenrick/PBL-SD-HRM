@@ -1,0 +1,23 @@
+|pbl
+clk => error~reg0.CLK
+clk => done~reg0.CLK
+clk => estado~5.DATAIN
+reset => error~reg0.ACLR
+reset => done~reg0.ACLR
+reset => estado~7.DATAIN
+start => estado.OUTPUTSELECT
+start => estado.OUTPUTSELECT
+start => estado.OUTPUTSELECT
+start => estado.OUTPUTSELECT
+ok => estado.OUTPUTSELECT
+ok => estado.OUTPUTSELECT
+ok => estado.OUTPUTSELECT
+ok => estado.OUTPUTSELECT
+err => estado.OUTPUTSELECT
+err => estado.OUTPUTSELECT
+err => estado.OUTPUTSELECT
+err => estado.OUTPUTSELECT
+done <= done~reg0.DB_MAX_OUTPUT_PORT_TYPE
+error <= error~reg0.DB_MAX_OUTPUT_PORT_TYPE
+
+
