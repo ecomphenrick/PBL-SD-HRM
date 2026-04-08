@@ -1,0 +1,65 @@
+module memory_cluster (
+    input clk,
+    
+    // Porta para inserção manual de dados via instrução (Marco 1)
+    input [31:0] manual_instruction,
+    
+    // Interface da Memória de Imagem (Leitura e Escrita)
+    input [9:0]  img_addr,
+    input [15:0] img_data_in,
+    input        img_we,
+    output [15:0] img_data_out,
+
+    // Interface da Memória de Pesos de Entrada (Leitura)
+    input [16:0] w_in_addr,
+    output [15:0] w_in_data_out,
+
+    // Interface da Memória de Bias (Leitura)
+    input [6:0]  bias_addr,
+    output [15:0] bias_data_out,
+
+    // Interface da Memória de Pesos de Saída (Leitura)
+    input [10:0] beta_addr,
+    output [15:0] beta_data_out
+);
+
+    // O endereço de escrita manual vem da instrução [25:16]
+    wire [9:0] manual_wr_addr = manual_instruction[25:16];
+
+    imagem_mif ram_img_inst (
+        .clock(clk),
+        .data(img_data_in),
+        .rdaddress(img_addr),
+        .wraddress(manual_wr_addr),
+        .wren(img_we),
+        .q(img_data_out)
+    );
+
+    W_in_q ram_win_inst (
+        .clock(clk),
+        .data(16'b0),
+        .rdaddress(w_in_addr),
+        .wraddress(17'b0),
+        .wren(1'b0),
+        .q(w_in_data_out)
+    );
+
+    b_q ram_bias_inst (
+        .clock(clk),
+        .data(16'b0),
+        .rdaddress(bias_addr),
+        .wraddress(7'b0),
+        .wren(1'b0),
+        .q(bias_data_out)
+    );
+
+    beta_q ram_beta_inst (
+        .clock(clk),
+        .data(16'b0),
+        .rdaddress(beta_addr),
+        .wraddress(11'b0),
+        .wren(1'b0),
+        .q(beta_data_out)
+    );
+
+endmodule

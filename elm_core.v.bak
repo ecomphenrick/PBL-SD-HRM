@@ -1,0 +1,45 @@
+module elm_core (
+    input clk,
+    input reset,
+    input [31:0] instruction,
+    input execute,
+
+    // Interface com a Memória de Imagem
+    output reg [9:0]  img_addr,
+    input  [15:0]     img_data_out,
+    output reg        img_we,
+    output reg [15:0] img_data_in,
+
+    // Interface com a Memória de Pesos W_in
+    output reg [16:0] w_in_addr,
+    input  [15:0]     w_in_data_out,
+
+    // Interface com a Memória de Bias
+    output reg [6:0]  bias_addr,
+    input  [15:0]     bias_data_out,
+
+    // Interface com a Memória de Pesos Beta
+    output reg [10:0] beta_addr,
+    input  [15:0]     beta_data_out,
+
+    // Sinais de Status e Resultado Final
+    output reg busy,
+    output reg done,
+    output reg error,
+    output reg [3:0] result
+);
+
+    // TODO: A Máquina de Estados (FSM), o decodificador da instrução
+    // e a instanciação do MAC (Multiplicador-Acumulador) e Argmax vão aqui dentro.
+    
+    // Inicialização básica para evitar erros de sintaxe na compilação:
+    always @(posedge clk) begin
+        if (reset) begin
+            busy <= 0;
+            done <= 0;
+            error <= 0;
+            img_we <= 0;
+        end
+    end
+
+endmodule
