@@ -1,25 +1,31 @@
 module top_module (
-    input CLOCK_50,
-    input [4:0] SW,       
-    input [3:0] KEY,
-    output [6:0] HEX0,
-    output [6:0] HEX1,
-    output [9:0] LEDR    // ADICIONADO: Barramento para LEDs unitários 
+    // Clock e Entradas Físicas
+    input        CLOCK_50,
+    input  [4:0] SW,       // Chaves para Instruções
+    input  [3:0] KEY,      // Botões (KEY0 = Reset, KEY3 = Execute)
+    
+    // Saídas para Visualização
+    output [6:0] HEX0,     // Status (IDLE, Busy, Done, Error)
+    output [6:0] HEX1,     // Resultado (0-9)
+    output [9:0] LEDR      // Resultado em Binário e Flags de Status
 );
 
-    // Sinais de Controle Globais
-    wire clk = CLOCK_50;
-    wire reset = ~KEY[0];
-    wire btn_exec = ~KEY[3];
+    // --- Sinais de Controle Internos ---
+    wire clk   = CLOCK_50;
+    wire reset = ~KEY[0];   // Inversão: Ativo em 1
+    wire execute = ~KEY[3]; // Inversão: Ativo em 1
     
-    // Instrução baseada nas chaves [cite: 83]
+    // Montagem da instrução de 32 bits a partir das chaves
     wire [31:0] current_instruction = {SW[4:0], 27'd0};
 
-    // Barramentos de Memória [cite: 84, 85, 86, 88]
+    // --- Barramentos de Interconexão (Wires) ---
+    // Interface da Imagem
     wire [9:0]  img_addr;
     wire [15:0] img_data_out;
     wire [15:0] img_data_in;
     wire        img_we;
+    
+    // Interface de Pesos e Bias
     wire [16:0] w_in_addr;
     wire [15:0] w_in_data_out;
     wire [6:0]  bias_addr;
@@ -27,20 +33,13 @@ module top_module (
     wire [10:0] beta_addr;
     wire [15:0] beta_data_out;
 
-    // Sinais de Status e Resultado [cite: 86, 87]
-    wire is_busy, is_done, is_error;
-    wire [3:0] predicted_digit; 
+    // Sinais de Saída do Núcleo
+    wire [3:0]  predicted_digit;
+    wire        is_busy, is_done, is_error;
 
-    // --- IMPLEMENTAÇÃO DOS LEDS --- 
-    // Mostra o dígito identificado nos 4 LEDs da direita em binário
-    assign LEDR[3:0] = predicted_digit; 
-    
-    // Feedback visual de status nos LEDs da esquerda
-    assign LEDR[9]   = is_busy;  // Aceso enquanto o co-processador calcula
-    assign LEDR[8]   = is_error; // Aceso se houver erro de leitura (.mif vazio)
-    assign LEDR[7:4] = 4'b0000;  // LEDs auxiliares desligados
+    // --- Instanciação dos Módulos ---
 
-    // --- INSTÂNCIA 1: Cluster de Memórias --- [cite: 87, 88]
+    // 1. Sistema de Memórias (Cluster)
     memory_cluster mem_sys (
         .clk(clk),
         .manual_instruction(current_instruction),
@@ -56,39 +55,40 @@ module top_module (
         .beta_data_out(beta_data_out)
     );
 
-    // --- INSTÂNCIA 2: Núcleo ELM --- [cite: 89, 90]
+    // 2. Núcleo de Processamento ELM
     elm_core core_inst (
         .clk(clk),
         .reset(reset),
         .instruction(current_instruction),
-        .execute(btn_exec),
+        .execute(execute),
+        // Portas de Memória
         .img_addr(img_addr),
         .img_data_out(img_data_out),
-        .img_we(img_we),
-        .img_data_in(img_data_in),
         .w_in_addr(w_in_addr),
         .w_in_data_out(w_in_data_out),
         .bias_addr(bias_addr),
         .bias_data_out(bias_data_out),
         .beta_addr(beta_addr),
         .beta_data_out(beta_data_out),
+        // Portas de Saída
         .busy(is_busy),
         .done(is_done),
         .error(is_error),
         .result(predicted_digit)
     );
 
-    // --- INSTÂNCIA 3: Displays --- [cite: 91, 92]
+    // 3. Interface Visual (LEDs e Displays)
     status_display display_status (
-        .busy(is_busy),
-        .done(is_done),
-        .error(is_error),
-        .hex_out(HEX0)
+        .busy(is_busy), .done(is_done), .error(is_error), .hex_out(HEX0)
     );
 
     hex_decoder display_result (
-        .bin_in(predicted_digit),
-        .hex_out(HEX1)
+        .bin_in(predicted_digit), .hex_out(HEX1)
     );
 
-endmodule // [cite: 93]
+    // Mapeamento dos LEDs Unitários
+    assign LEDR[3:0] = predicted_digit; // Binário do resultado
+    assign LEDR[9]   = is_busy;        // LED de processamento
+    assign LEDR[8]   = is_error;       // LED de falha de memória
+
+endmodule
