@@ -1,17 +1,17 @@
-Fitter Status : Successful - Thu Mar 26 11:05:42 2026
+Fitter Status : Successful - Mon Apr 13 21:25:19 2026
 Quartus Prime Version : 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
 Revision Name : pbl
-Top-level Entity Name : memoria
+Top-level Entity Name : top_level
 Family : Cyclone V
 Device : 5CSEMA5F31C6
 Timing Models : Final
-Logic utilization (in ALMs) : 118 / 32,070 ( < 1 % )
-Total registers : 20
-Total pins : 57 / 457 ( 12 % )
+Logic utilization (in ALMs) : 2,143 / 32,070 ( 7 % )
+Total registers : 2903
+Total pins : 234 / 457 ( 51 % )
 Total virtual pins : 0
-Total block memory bits : 1,605,632 / 4,065,280 ( 39 % )
-Total RAM Blocks : 196 / 397 ( 49 % )
-Total DSP Blocks : 0 / 87 ( 0 % )
+Total block memory bits : 1,640,704 / 4,065,280 ( 40 % )
+Total RAM Blocks : 203 / 397 ( 51 % )
+Total DSP Blocks : 2 / 87 ( 2 % )
 Total HSSI RX PCSs : 0
 Total HSSI PMA RX Deserializers : 0
 Total HSSI TX PCSs : 0
