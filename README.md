@@ -1,5 +1,4 @@
 # PBL-SD-HRM
-# Coprocessador-de-Imagem
 
 ## Sumário
 
