@@ -1,0 +1,105 @@
+module pbl_ctrl (
+    input  wire        clk,
+    input  wire        reset,
+    input  wire        btn,
+    input  wire [2:0]  sw,
+    // --- Sinais da inferência ---
+    input  wire        infer_done,
+    input  wire        infer_error,
+    // --- LEDs de status ---
+    output reg         led_w,
+    output reg         led_bias,
+    output reg         led_beta,
+    output reg         led_img,
+    output reg         led_ready,
+    output reg         led_busy,
+    output reg         led_done,
+    output reg         led_error,
+    // --- Controle ---
+    output reg         start,          // pulso de 1 ciclo para pbl_infer
+    output wire        inferencia_ativa
+);
+
+    localparam READY      = 3'd0;
+    localparam STORE_W    = 3'd1;
+    localparam STORE_BIAS = 3'd2;
+    localparam STORE_BETA = 3'd3;
+    localparam STORE_IMG  = 3'd4;
+    localparam BUSY       = 3'd5;
+    localparam DONE       = 3'd6;
+    localparam ERROR      = 3'd7;
+
+    reg [2:0] estado;
+    reg btn_prev;
+
+    wire confirm_pulse = (btn_prev == 1'b1) && (btn == 1'b0);
+    wire all_loaded    = led_w & led_bias & led_beta & led_img;
+
+    assign inferencia_ativa = (estado == BUSY);
+
+    always @(posedge clk or posedge reset) begin
+        if (reset) begin
+            estado    <= READY;
+            btn_prev  <= 1'b1;
+            led_w     <= 0;
+            led_bias  <= 0;
+            led_beta  <= 0;
+            led_img   <= 0;
+            led_ready <= 1;
+            led_busy  <= 0;
+            led_done  <= 0;
+            led_error <= 0;
+            start     <= 0;
+        end else begin
+            btn_prev <= btn;
+            start    <= 0; // pulso de 1 ciclo; só sobe quando necessário
+
+            case (estado)
+
+                READY: begin
+                    led_ready <= 1;
+                    if (confirm_pulse) begin
+                        case (sw)
+                            3'b000: estado <= STORE_W;
+                            3'b001: estado <= STORE_BIAS;
+                            3'b010: estado <= STORE_BETA;
+                            3'b011: estado <= STORE_IMG;
+                            3'b111: begin
+                                if (all_loaded) begin
+                                    estado <= BUSY;
+                                    start  <= 1;
+                                end else begin
+                                    estado <= ERROR;
+                                end
+                            end
+                            default: estado <= READY;
+                        endcase
+                    end
+                end
+
+                STORE_W:    begin led_w    <= 1; estado <= READY; end
+                STORE_BIAS: begin led_bias <= 1; estado <= READY; end
+                STORE_BETA: begin led_beta <= 1; estado <= READY; end
+                STORE_IMG:  begin led_img  <= 1; estado <= READY; end
+
+                BUSY: begin
+                    led_ready <= 0;
+                    led_busy  <= 1;
+                    if (infer_done) begin
+                        led_busy <= 0;
+                        estado   <= DONE;
+                    end else if (infer_error) begin
+                        led_busy  <= 0;
+                        led_error <= 1;
+                        estado    <= ERROR;
+                    end
+                end
+
+                DONE:  begin led_done  <= 1; end
+                ERROR: begin led_ready <= 0; led_error <= 1; end
+                default: estado <= READY;
+
+            endcase
+        end
+    end
+endmodule

@@ -1,4 +1,4 @@
-/* Quartus Prime Version 25.1std.0 Build 1129 10/21/2025 SC Lite Edition */
+/* Quartus Prime Version 23.1std.0 Build 991 11/28/2023 SC Lite Edition */
 JedecChain;
 	FileRevision(JESD32A);
 	DefaultMfr(6E);
@@ -6,7 +6,7 @@ JedecChain;
 	P ActionCode(Ign)
 		Device PartName(SOCVHPS) MfrSpec(OpMask(0));
 	P ActionCode(Cfg)
-		Device PartName(5CSEMA5F31) Path("/home/aluno/Downloads/de noite/PBL-SD-HRM-main/output_files/") File("pbl.sof") MfrSpec(OpMask(1));
+		Device PartName(5CSEMA5F31) Path("/home/aluno/Documentos/14041930/PBL-SD-HRM-main/output_files/") File("pbl.sof") MfrSpec(OpMask(1));
 
 ChainEnd;
 
