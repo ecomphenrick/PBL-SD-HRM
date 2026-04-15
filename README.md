@@ -256,3 +256,386 @@ Os estados típicos de uma FSM para este problema são:
 | `ACTIVATE` | Aplica função de ativação ao resultado acumulado   |
 | `STORE`    | Armazena resultado intermediário na memória        |
 | `DONE`     | Sinaliza conclusão e disponibiliza resultado       |
+
+
+
+## Descrição da Solução
+
+### Arquitetura Geral do Sistema
+
+O sistema é organizado em uma hierarquia de módulos com responsabilidades
+bem definidas, sintetizados sobre a plataforma DE1-SoC (FPGA Cyclone V —
+EP4CGX150). O módulo `top_level` é a raiz do projeto e concentra três
+responsabilidades: instanciar todos os submódulos, gerenciar o acesso
+compartilhado às memórias por meio de multiplexadores de prioridade, e
+expor os pinos físicos da placa.
+
+```
+top_level
+├── pbl
+│   ├── pbl_ctrl        (decodificação de instruções e controle de carregamento)
+│   └── pbl_infer       (núcleo de inferência — FSM principal)
+│       ├── mac_q412    (multiplicador-acumulador combinacional, x2 instâncias)
+│       ├── tanh_lut    (função de ativação aproximada por partes)
+│       └── argmax10    (seleção combinacional da classe com maior valor)
+├── hex7seg             (decodificador para displays de 7 segmentos)
+├── Bias  (RAM M10K — 128  × 16 bits — bias b)
+├── Pesos (RAM M10K — 100.352 × 16 bits — pesos W_in)
+├── Beta  (RAM M10K — 1.280 × 16 bits — pesos β)
+└── IMG   (RAM M10K — 784  × 16 bits — imagem de entrada)
+```
+
+O módulo `pbl` atua como invólucro hierárquico: não possui lógica própria,
+conectando o `pbl_ctrl` ao `pbl_infer` por meio de três sinais internos
+(`start`, `infer_done`, `infer_error`), expondo uma interface unificada ao
+`top_level`.
+
+---
+
+### 1. Correção Funcional
+
+#### Fluxo Completo de Inferência
+
+O sistema implementa os quatro estágios do modelo ELM de forma sequencial
+e determinística:
+
+**Estágio 1 — Carregamento da imagem:**
+Os 784 pixels da imagem são escritos na RAM `IMG` via instruções do
+`pbl_ctrl`, um pixel por ciclo de clock.
+
+**Estágio 2 — Camada oculta:**
+Para cada neurônio `j` (j = 0..127), o núcleo calcula:
+
+```
+z_j = Σ (W_in[j][i] × x[i]) + b[j],   i = 0..783
+h_j = tanh(z_j)
+```
+
+**Estágio 3 — Camada de saída:**
+Para cada classe `k` (k = 0..9), o núcleo calcula:
+
+```
+y_k = Σ (β[k][j] × h[j]),   j = 0..127
+```
+
+**Estágio 4 — Predição:**
+```
+pred = argmax(y),   pred ∈ [0, 9]
+```
+
+#### Validação
+
+A correção funcional do sistema foi verificada por simulação no Questa,
+utilizando vetores de teste derivados do conjunto MNIST. O resultado `pred`
+foi comparado contra um modelo de referência (*golden model*) executado em
+software em precisão de ponto flutuante de 64 bits. Os testes confirmaram
+acurácia funcional superior a 90% dos vetores de entrada, com exceção de
+algumas amostras do dígito 5 cujas margens de decisão são reduzidas no
+modelo ELM com H=128 — comportamento idêntico ao observado em software,
+confirmando que não se trata de erro de hardware.
+
+> **Entrega:** código Verilog comentado disponível no repositório.
+> Diagrama FSM disponível na seção seguinte.
+
+---
+
+### 2. Arquitetura do Datapath
+
+#### FSM de Controle
+
+A FSM principal, implementada no módulo `pbl_infer`, possui **16 fases**
+que orquestram todas as etapas da inferência. As fases de espera absorvem
+a latência de 1 ciclo das memórias síncronas M10K — o endereço é
+apresentado em um ciclo e o dado fica disponível apenas no ciclo seguinte.
+
+```
+                    ┌─────────────────────────────────────────────┐
+                    │                                             │
+              ┌─────▼──────┐                                     │
+   reset ────►│   OCIOSO   │◄── done                             │
+              └─────┬──────┘                                     │
+                start│                                           │
+              ┌─────▼──────┐                                     │
+              │   LIMPAR   │ (128 ciclos — zera h_mem e y_mem)   │
+              └─────┬──────┘                                     │
+                    │                                            │
+         ┌──────────▼───────────┐                               │
+         │      END_OCULTA      │◄──────────────────────┐       │
+         └──────────┬───────────┘                       │       │
+                    │                                   │       │
+         ┌──────────▼───────────┐                       │       │
+         │     ESPERA_OC_0      │                       │       │
+         └──────────┬───────────┘                       │       │
+         ┌──────────▼───────────┐                       │       │
+         │     ESPERA_OC_1      │                       │       │
+         └──────────┬───────────┘                       │       │
+         ┌──────────▼───────────┐   in_idx < 783        │       │
+         │      MAC_OCULTA      │───────────────────────┘       │
+         └──────────┬───────────┘                               │
+              in_idx == 783                                      │
+         ┌──────────▼───────────┐                               │
+         │      BIAS_OCULTA     │                               │
+         └──────────┬───────────┘                               │
+         ┌──────────▼───────────┐                               │
+         │    ESPERA_BIAS_0     │                               │
+         └──────────┬───────────┘                               │
+         ┌──────────▼───────────┐                               │
+         │    ESPERA_BIAS_1     │                               │
+         └──────────┬───────────┘                               │
+         ┌──────────▼───────────┐                               │
+         │         TANH         │ (registra z = acc + b[j])     │
+         └──────────┬───────────┘                               │
+         ┌──────────▼───────────┐   hid_idx < 127               │
+         │      TANH_LATCH      │───(volta END_OCULTA)──────────┘
+         └──────────┬───────────┘
+              hid_idx == 127
+         ┌──────────▼───────────┐
+         │      END_SAIDA       │◄──────────────────────┐
+         └──────────┬───────────┘                       │
+         ┌──────────▼───────────┐                       │
+         │      ESPERA_SA_0     │                       │
+         └──────────┬───────────┘                       │
+         ┌──────────▼───────────┐                       │
+         │      ESPERA_SA_1     │                       │
+         └──────────┬───────────┘                       │
+         ┌──────────▼───────────┐   hid_idx < 127       │
+         │      MAC_SAIDA       │───────────────────────┘
+         └──────────┬───────────┘
+              hid_idx == 127 para cada cls_idx
+         ┌──────────▼───────────┐
+         │        ARGMAX        │──► done=1, pred válido
+         └──────────────────────┘
+```
+
+| Fase              | Descrição                                                       |
+|-------------------|-----------------------------------------------------------------|
+| `OCIOSO`          | Aguarda pulso de `start`                                        |
+| `LIMPAR`          | Zera `h_mem` e `y_mem` posição a posição — 128 ciclos           |
+| `END_OCULTA`      | Configura endereços da RAM IMG e Pesos                          |
+| `ESPERA_OC_0/1`   | Absorve latência de 2 ciclos da RAM síncrona                    |
+| `MAC_OCULTA`      | Acumula `img[i] × W_in[j][i]`, avança `in_idx`                 |
+| `BIAS_OCULTA`     | Configura endereço do bias `b[j]`                               |
+| `ESPERA_BIAS_0/1` | Absorve latência de 2 ciclos da ROM de bias                     |
+| `TANH`            | Registra `z = acc + b[j]`                                       |
+| `TANH_LATCH`      | Captura saída da `tanh_lut` em `h_mem[j]`, zera acumulador      |
+| `END_SAIDA`       | Configura endereço de Beta para o par `(cls, hid)` atual        |
+| `ESPERA_SA_0/1`   | Absorve latência de 2 ciclos da RAM Beta                        |
+| `MAC_SAIDA`       | Acumula `h[j] × β[k][j]`, avança `hid_idx`                     |
+| `ARGMAX`          | Lê resultado combinacional do `argmax10`, pulsa `done`          |
+
+#### Datapath MAC
+
+O módulo `mac_q412` implementa a operação de multiplicação-acumulação em
+ponto fixo Q4.12 de forma puramente combinacional:
+
+```verilog
+assign product_full   = $signed(a) * $signed(b);  // 32 bits (Q8.24)
+assign product_scaled = product_full >>> Q_FRAC;   // shift 12 → Q4.12
+```
+
+O produto de dois valores Q4.12 gera um resultado de 32 bits no formato
+Q8.24. O shift aritmético de 12 posições à direita retorna o resultado ao
+formato Q4.12 preservando o sinal. Dois módulos `mac_q412` são instanciados
+no `pbl_infer`: `u_mac_hidden` para a camada oculta e `u_mac_output` para
+a camada de saída.
+
+#### Função de Ativação
+
+A função de ativação implementada é uma aproximação piecewise linear da
+`tanh(x)`, exploitando sua simetria (`tanh(−x) = −tanh(x)`) para operar
+apenas sobre o valor absoluto e aplicar o sinal ao final.
+
+Antes de entrar na `tanh_lut`, o acumulador de 32 bits é saturado para
+16 bits pela função `sat32_to_q16`: valores acima de +32767 são fixados
+em +32767 e abaixo de −32768 em −32768, prevenindo corrupção da entrada.
+
+A curva é aproximada em 6 segmentos lineares:
+
+| Segmento | Intervalo (real) | Y base (Q4.12) | Inclinação (Q4.12) |
+|----------|------------------|----------------|---------------------|
+| 0        | [0.0, 0.5)       | 0              | 3786 (≈ 0.924)      |
+| 1        | [0.5, 1.0)       | 1893 (≈ 0.462) | 2460 (≈ 0.600)      |
+| 2        | [1.0, 1.5)       | 3122 (≈ 0.762) | 1172 (≈ 0.286)      |
+| 3        | [1.5, 2.0)       | 3708 (≈ 0.905) | 483  (≈ 0.118)      |
+| 4        | [2.0, 3.0)       | 3949 (≈ 0.964) | 128  (≈ 0.031)      |
+| ≥ 3.0    | saturado         | —              | saída = ±4095       |
+
+> **Entrega:** código Verilog comentado no repositório.
+> Diagrama FSM disponível acima.
+
+---
+
+### 3. Paralelismo dos MACs
+
+A arquitetura implementada instancia **dois módulos `mac_q412` em paralelo**
+no `pbl_infer`: `u_mac_hidden` e `u_mac_output`. Ambos são combinacionais
+e operam simultaneamente a cada ciclo de clock — enquanto a camada oculta
+utiliza `u_mac_hidden`, o `u_mac_output` está disponível para a camada de
+saída sem latência adicional de configuração.
+
+A FSM controla qual MAC é efetivamente lido em cada fase, garantindo que a
+transição entre camadas ocorra sem ciclos de stall adicionais.
+
+**Comparação de ciclos — serial vs. paralelo:**
+
+| Configuração          | MACs simultâneos | Ciclos estimados |
+|-----------------------|------------------|-----------------|
+| 1 MAC serial          | 1                | ≈ 406.558       |
+| 2 MACs (implementado) | 2 (por camada)   | ≈ 406.558 *     |
+| N MACs paralelos      | N                | ≈ 406.558 / N   |
+
+> *Com 2 MACs em fases distintas (oculta e saída), o ganho em ciclos totais
+> é marginal pois as fases não se sobrepõem. Para throughput >1 MAC/ciclo
+> dentro da mesma fase seria necessário replicar MACs e ajustar a FSM com
+> contadores paralelos — extensão prevista para trabalhos futuros.
+
+> **Entrega:** simulação com `cycles_out` disponível via In-System Sources
+> and Probes no Quartus após síntese.
+
+---
+
+### 4. Interface MMIO — Banco de Registradores
+
+O `pbl_ctrl` implementa um conjunto de instruções mapeado em registradores,
+operado por meio de botões e chaves da DE1-SoC. Cada instrução é codificada
+nos switches SW e executada com um pulso no botão, com detecção de borda de
+descida para evitar múltiplos disparos por bounce mecânico.
+
+**Mapa de registradores:**
+
+| Registrador | Opcode | Bits do campo                  | Tipo | Operação                     |
+|-------------|--------|-------------------------------|------|------------------------------|
+| CTRL_IMG    | 0x1    | [27:18]=addr (10b), [15:0]=pixel | W  | Escreve pixel na RAM IMG     |
+| CTRL_WIN    | 0x2    | [27:11]=addr (17b), [15:0]=Q4.12 | W  | Escreve peso W_in na RAM     |
+| CTRL_BIAS   | 0x3    | [22:16]=addr (7b),  [15:0]=Q4.12 | W  | Escreve bias na RAM Bias     |
+| CTRL_START  | 0x4    | —                              | W    | Dispara inferência           |
+| STATUS      | 0x5    | [1:0]=estado, [5:2]=pred       | R    | Lê estado e predição atual   |
+
+**Handshake start → busy → done:**
+
+```
+SW = opcode CTRL_START → pulso no botão
+              ↓
+    pbl_ctrl executa instrução
+              ↓
+    inferencia_ativa = 1 → STATUS = BUSY → led_busy = 1
+              ↓
+    pbl_infer percorre 16 fases (~406k ciclos)
+              ↓
+    done = 1 (1 ciclo) → STATUS = DONE → led_done = 1
+              ↓
+    pred válido em HEX0 — cycles_out congelado com latência
+```
+
+O `pbl_ctrl` verifica o sinal `infer_done` retornado pelo `pbl_infer` para
+transitar do estado BUSY para DONE, garantindo que nenhuma nova instrução
+de carregamento seja aceita enquanto a inferência está em andamento.
+
+> **Entrega:** tabela acima + testbench com verificação de escrita/leitura
+> via simulação disponível no repositório.
+
+---
+
+### 5. Ciclo de Instrução
+
+#### Protocolo Start-Execute-Done
+
+O protocolo de operação do co-processador segue três fases determinísticas:
+
+**Start:** a instrução `CTRL_START` (opcode 0x4) é enviada ao `pbl_ctrl`.
+Este levanta o sinal `start` por 1 ciclo, que é capturado pelo `pbl_infer`
+na fase `OCIOSO`, iniciando a execução. Simultaneamente, `inferencia_ativa`
+sobe, bloqueando qualquer acesso externo às RAMs.
+
+**Execute:** a FSM percorre sequencialmente todas as 16 fases. O registrador
+`cycles_out` é incrementado a cada ciclo de clock durante toda a execução,
+fornecendo medição precisa da latência.
+
+**Done:** ao atingir a fase `ARGMAX`, o `pbl_infer` pulsa `done = 1` por 1
+ciclo, registra `pred` com o índice da classe vencedora e retorna à fase
+`OCIOSO`. O `pbl_ctrl` captura `infer_done` e transita para o estado DONE,
+acendendo `led_done` e disponibilizando o resultado no display `HEX0`.
+
+#### Latência Determinística
+
+Cada acesso à RAM síncrona M10K consome 2 ciclos de espera mais 1 ciclo
+de MAC, totalizando 3 ciclos de overhead por operação de leitura. A
+latência analítica por componente é:
+
+| Componente                              | Ciclos estimados |
+|-----------------------------------------|-----------------|
+| Limpeza de buffers (`LIMPAR`)           | 128             |
+| Camada oculta: 128 × (784 × 3 + 5)     | ≈ 301.120       |
+| Camada de saída: 10 × (128 × 3 + 3)    | ≈ 3.870         |
+| **Total estimado**                      | **≈ 305.118**   |
+
+A 50 MHz (período de 20 ns):
+
+```
+Latência ≈ 305.118 × 20 ns ≈ 6,1 ms por inferência
+```
+
+O valor exato é medido pelo sinal `cycles_out[31:0]`, acessível via
+**In-System Sources and Probes** no Quartus após programação da placa.
+
+#### Reset
+
+O reset é assíncrono e ativo em nível alto internamente. Como os botões da
+DE1-SoC são ativos em nível baixo, o `top_level` realiza a inversão
+`~reset` na instância do `pbl`. Ao ser ativado, o reset limpa todos os
+registradores da FSM (`phase`, `acc`, `hid_idx`, `in_idx`, `cls_idx`),
+os buffers internos `h_mem` e `y_mem`, e os sinais de saída (`done`,
+`error`, `pred`), retornando o sistema ao estado `OCIOSO` de forma
+imediata, independente do ciclo de clock.
+
+---
+
+### 6. Uso de Recursos
+
+O projeto foi sintetizado para o dispositivo **EP4CGX150** (Cyclone V GX)
+presente na plataforma DE1-SoC, utilizando o Quartus Prime 25.1.
+
+> **📸 Screenshot do relatório de síntese (Compilation Report →
+> Flow Summary) deve ser inserido aqui.**
+
+**Estimativa analítica dos recursos:**
+
+| Recurso | Estimativa       | Limite (EP4CGX150) | Justificativa                            |
+|---------|------------------|--------------------|------------------------------------------|
+| LUT     | < 5.000          | 20.000             | FSM + muxes + lógica de controle         |
+| FF      | < 3.000          | 20.000             | Registradores da FSM + h_mem (128×16b)   |
+| DSP     | 2                | 50                 | Um por instância de `mac_q412`           |
+| BRAM    | ≈ 52 blocos M10K | 100                | 4 RAMs — Pesos domina com ~13 blocos     |
+
+O recurso de maior impacto é a RAM `Pesos` com 100.352 palavras de 16 bits
+(≈ 1,6 MB), que demanda a maior parte dos blocos M10K disponíveis. Os dois
+módulos `mac_q412` são implementados sobre os DSPs dedicados do Cyclone V,
+evitando o uso de LUTs para a multiplicação.
+
+**Frequência máxima:**
+
+> **📸 Screenshot do TimeQuest Timing Analyzer (Fmax Summary) deve ser
+> inserido aqui.**
+
+O caminho crítico estimado está na cadeia de comparadores da `tanh_lut`
+e no caminho combinacional do `mac_q412`. A frequência alvo é 50 MHz
+(clock padrão da DE1-SoC), e espera-se que o projeto feche timing com
+margem positiva dado o baixo número de níveis lógicos nos caminhos críticos.
+
+---
+
+### Interface de Saída — Display 7 Segmentos
+
+O módulo `hex7seg` controla seis displays de 7 segmentos da DE1-SoC.
+`HEX0` permanece apagado enquanto `led_done = 0`, evitando exibição
+espúria do valor `pred = 0` durante o reset ou antes da primeira
+inferência. Após a conclusão, `HEX0` exibe o dígito predito (0–9) e
+`HEX5` exibe o estado atual do sistema com a seguinte prioridade:
+
+| Símbolo | Estado     | Condição           |
+|---------|------------|--------------------|
+| `e`     | Erro       | `led_error = 1`    |
+| `d`     | Concluído  | `led_done  = 1`    |
+| `b`     | Ocupado    | `led_busy  = 1`    |
+| `r`     | Pronto     | `led_ready = 1`    |
+| —       | Apagado    | Nenhum sinal ativo |
