@@ -1,5 +1,5 @@
 Timing Analyzer report for pbl
-Tue Apr 14 19:30:59 2026
+Wed Apr 15 09:52:50 2026
 Quartus Prime Version 23.1std.0 Build 991 11/28/2023 SC Lite Edition
 
 
@@ -99,27 +99,25 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------+-------------+
 ; Processors                 ; Number      ;
 +----------------------------+-------------+
-; Number detected on machine ; 20          ;
-; Maximum allowed            ; 14          ;
+; Number detected on machine ; 12          ;
+; Maximum allowed            ; 12          ;
 ;                            ;             ;
-; Average used               ; 4.06        ;
-; Maximum used               ; 14          ;
+; Average used               ; 3.56        ;
+; Maximum used               ; 12          ;
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processor 2            ;  24.1%      ;
-;     Processor 3            ;  24.0%      ;
-;     Processor 4            ;  24.0%      ;
-;     Processor 5            ;  23.4%      ;
-;     Processor 6            ;  23.4%      ;
-;     Processor 7            ;  23.4%      ;
-;     Processor 8            ;  23.4%      ;
-;     Processor 9            ;  23.4%      ;
-;     Processor 10           ;  23.4%      ;
-;     Processor 11           ;  23.4%      ;
-;     Processor 12           ;  23.4%      ;
-;     Processor 13           ;  23.4%      ;
-;     Processor 14           ;  23.4%      ;
+;     Processor 2            ;  23.8%      ;
+;     Processor 3            ;  23.7%      ;
+;     Processor 4            ;  23.7%      ;
+;     Processor 5            ;  23.1%      ;
+;     Processor 6            ;  23.1%      ;
+;     Processor 7            ;  23.1%      ;
+;     Processor 8            ;  23.1%      ;
+;     Processor 9            ;  23.1%      ;
+;     Processor 10           ;  23.1%      ;
+;     Processor 11           ;  23.1%      ;
+;     Processor 12           ;  23.1%      ;
 +----------------------------+-------------+
 
 
@@ -1668,11 +1666,11 @@ No non-DPA dedicated SERDES Receiver circuitry present in device or used in desi
 Info: *******************************************************************
 Info: Running Quartus Prime Timing Analyzer
     Info: Version 23.1std.0 Build 991 11/28/2023 SC Lite Edition
-    Info: Processing started: Tue Apr 14 19:30:51 2026
+    Info: Processing started: Wed Apr 15 09:52:40 2026
 Info: Command: quartus_sta pbl -c pbl
 Info: qsta_default_script.tcl version: #1
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
-Info (20030): Parallel compilation is enabled and will use 14 of the 14 processors detected
+Info (20030): Parallel compilation is enabled and will use 12 of the 12 processors detected
 Info (21077): Low junction temperature is 0 degrees C
 Info (21077): High junction temperature is 85 degrees C
 Info (332164): Evaluating HDL-embedded SDC commands
@@ -1787,8 +1785,8 @@ Info (332102): Design is not fully constrained for setup requirements
 Info (332102): Design is not fully constrained for hold requirements
 Info: Quartus Prime Timing Analyzer was successful. 0 errors, 6 warnings
     Info: Peak virtual memory: 1074 megabytes
-    Info: Processing ended: Tue Apr 14 19:30:59 2026
-    Info: Elapsed time: 00:00:08
+    Info: Processing ended: Wed Apr 15 09:52:50 2026
+    Info: Elapsed time: 00:00:10
     Info: Total CPU time (on all processors): 00:00:29
 
 

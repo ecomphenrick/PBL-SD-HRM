@@ -1,5 +1,5 @@
 Assembler report for pbl
-Tue Apr 14 19:30:50 2026
+Wed Apr 15 09:52:39 2026
 Quartus Prime Version 23.1std.0 Build 991 11/28/2023 SC Lite Edition
 
 
@@ -39,7 +39,7 @@ https://fpgasoftware.intel.com/eula.
 +---------------------------------------------------------------+
 ; Assembler Summary                                             ;
 +-----------------------+---------------------------------------+
-; Assembler Status      ; Successful - Tue Apr 14 19:30:50 2026 ;
+; Assembler Status      ; Successful - Wed Apr 15 09:52:39 2026 ;
 ; Revision Name         ; pbl                                   ;
 ; Top-level Entity Name ; top_level                             ;
 ; Family                ; Cyclone V                             ;
@@ -64,13 +64,13 @@ https://fpgasoftware.intel.com/eula.
 +--------+------------------------+--------------+
 
 
-+----------------------------------------------------------------------+
-; Assembler Generated Files                                            ;
-+----------------------------------------------------------------------+
-; File Name                                                            ;
-+----------------------------------------------------------------------+
-; /home/aluno/Documentos/14041830/PBL-SD-HRM-main/output_files/pbl.sof ;
-+----------------------------------------------------------------------+
++---------------------------------------------------------------------------+
+; Assembler Generated Files                                                 ;
++---------------------------------------------------------------------------+
+; File Name                                                                 ;
++---------------------------------------------------------------------------+
+; /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/output_files/pbl.sof ;
++---------------------------------------------------------------------------+
 
 
 +-----------------------------------+
@@ -89,14 +89,14 @@ https://fpgasoftware.intel.com/eula.
 Info: *******************************************************************
 Info: Running Quartus Prime Assembler
     Info: Version 23.1std.0 Build 991 11/28/2023 SC Lite Edition
-    Info: Processing started: Tue Apr 14 19:30:44 2026
+    Info: Processing started: Wed Apr 15 09:52:32 2026
 Info: Command: quartus_asm --read_settings_files=off --write_settings_files=off pbl -c pbl
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (115030): Assembler is generating device programming files
 Info: Quartus Prime Assembler was successful. 0 errors, 1 warning
-    Info: Peak virtual memory: 563 megabytes
-    Info: Processing ended: Tue Apr 14 19:30:50 2026
-    Info: Elapsed time: 00:00:06
-    Info: Total CPU time (on all processors): 00:00:06
+    Info: Peak virtual memory: 567 megabytes
+    Info: Processing ended: Wed Apr 15 09:52:39 2026
+    Info: Elapsed time: 00:00:07
+    Info: Total CPU time (on all processors): 00:00:07
 
 

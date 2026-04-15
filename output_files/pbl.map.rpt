@@ -1,5 +1,5 @@
 Analysis & Synthesis report for pbl
-Tue Apr 14 19:29:43 2026
+Wed Apr 15 09:51:16 2026
 Quartus Prime Version 23.1std.0 Build 991 11/28/2023 SC Lite Edition
 
 
@@ -68,7 +68,7 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                     ;
 +---------------------------------+------------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Tue Apr 14 19:29:43 2026          ;
+; Analysis & Synthesis Status     ; Successful - Wed Apr 15 09:51:16 2026          ;
 ; Quartus Prime Version           ; 23.1std.0 Build 991 11/28/2023 SC Lite Edition ;
 ; Revision Name                   ; pbl                                            ;
 ; Top-level Entity Name           ; top_level                                      ;
@@ -180,15 +180,15 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------+-------------+
 ; Processors                 ; Number      ;
 +----------------------------+-------------+
-; Number detected on machine ; 20          ;
-; Maximum allowed            ; 14          ;
+; Number detected on machine ; 12          ;
+; Maximum allowed            ; 12          ;
 ;                            ;             ;
 ; Average used               ; 1.00        ;
-; Maximum used               ; 14          ;
+; Maximum used               ; 12          ;
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processor 2            ;   0.1%      ;
+;     Processor 2            ;   0.0%      ;
 ;     Processor 3            ;   0.0%      ;
 ;     Processor 4            ;   0.0%      ;
 ;     Processor 5            ;   0.0%      ;
@@ -196,63 +196,65 @@ https://fpgasoftware.intel.com/eula.
 ;     Processor 7            ;   0.0%      ;
 ;     Processor 8            ;   0.0%      ;
 ;     Processor 9            ;   0.0%      ;
-;     Processors 10-14       ;   0.0%      ;
+;     Processor 10           ;   0.0%      ;
+;     Processor 11           ;   0.0%      ;
+;     Processor 12           ;   0.0%      ;
 +----------------------------+-------------+
 
 
-+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis Source Files Read                                                                                                                                                                                                                                 ;
-+--------------------------------------------------------------------+-----------------+----------------------------------------------+--------------------------------------------------------------------------------------------------------------------+-------------+
-; File Name with User-Entered Path                                   ; Used in Netlist ; File Type                                    ; File Name with Absolute Path                                                                                       ; Library     ;
-+--------------------------------------------------------------------+-----------------+----------------------------------------------+--------------------------------------------------------------------------------------------------------------------+-------------+
-; pbl.v                                                              ; yes             ; User Verilog HDL File                        ; /home/aluno/Documentos/14041830/PBL-SD-HRM-main/pbl.v                                                              ;             ;
-; top_level.v                                                        ; yes             ; User Verilog HDL File                        ; /home/aluno/Documentos/14041830/PBL-SD-HRM-main/top_level.v                                                        ;             ;
-; Pesos.v                                                            ; yes             ; User Wizard-Generated File                   ; /home/aluno/Documentos/14041830/PBL-SD-HRM-main/Pesos.v                                                            ;             ;
-; Beta.v                                                             ; yes             ; User Wizard-Generated File                   ; /home/aluno/Documentos/14041830/PBL-SD-HRM-main/Beta.v                                                             ;             ;
-; Bias.v                                                             ; yes             ; User Wizard-Generated File                   ; /home/aluno/Documentos/14041830/PBL-SD-HRM-main/Bias.v                                                             ;             ;
-; hex7seg.v                                                          ; yes             ; User Verilog HDL File                        ; /home/aluno/Documentos/14041830/PBL-SD-HRM-main/hex7seg.v                                                          ;             ;
-; mac_q412.v                                                         ; yes             ; User Verilog HDL File                        ; /home/aluno/Documentos/14041830/PBL-SD-HRM-main/mac_q412.v                                                         ;             ;
-; argmax10.v                                                         ; yes             ; User Verilog HDL File                        ; /home/aluno/Documentos/14041830/PBL-SD-HRM-main/argmax10.v                                                         ;             ;
-; tanh_lut.v                                                         ; yes             ; User Verilog HDL File                        ; /home/aluno/Documentos/14041830/PBL-SD-HRM-main/tanh_lut.v                                                         ;             ;
-; IMG.v                                                              ; yes             ; User Wizard-Generated File                   ; /home/aluno/Documentos/14041830/PBL-SD-HRM-main/IMG.v                                                              ;             ;
-; pbl_infer.v                                                        ; yes             ; User Verilog HDL File                        ; /home/aluno/Documentos/14041830/PBL-SD-HRM-main/pbl_infer.v                                                        ;             ;
-; pbl_ctrl.v                                                         ; yes             ; User Verilog HDL File                        ; /home/aluno/Documentos/14041830/PBL-SD-HRM-main/pbl_ctrl.v                                                         ;             ;
-; altsyncram.tdf                                                     ; yes             ; Megafunction                                 ; /opt/intelFPGA_lite/23.1/quartus/libraries/megafunctions/altsyncram.tdf                                            ;             ;
-; stratix_ram_block.inc                                              ; yes             ; Megafunction                                 ; /opt/intelFPGA_lite/23.1/quartus/libraries/megafunctions/stratix_ram_block.inc                                     ;             ;
-; lpm_mux.inc                                                        ; yes             ; Megafunction                                 ; /opt/intelFPGA_lite/23.1/quartus/libraries/megafunctions/lpm_mux.inc                                               ;             ;
-; lpm_decode.inc                                                     ; yes             ; Megafunction                                 ; /opt/intelFPGA_lite/23.1/quartus/libraries/megafunctions/lpm_decode.inc                                            ;             ;
-; aglobal231.inc                                                     ; yes             ; Megafunction                                 ; /opt/intelFPGA_lite/23.1/quartus/libraries/megafunctions/aglobal231.inc                                            ;             ;
-; a_rdenreg.inc                                                      ; yes             ; Megafunction                                 ; /opt/intelFPGA_lite/23.1/quartus/libraries/megafunctions/a_rdenreg.inc                                             ;             ;
-; altrom.inc                                                         ; yes             ; Megafunction                                 ; /opt/intelFPGA_lite/23.1/quartus/libraries/megafunctions/altrom.inc                                                ;             ;
-; altram.inc                                                         ; yes             ; Megafunction                                 ; /opt/intelFPGA_lite/23.1/quartus/libraries/megafunctions/altram.inc                                                ;             ;
-; altdpram.inc                                                       ; yes             ; Megafunction                                 ; /opt/intelFPGA_lite/23.1/quartus/libraries/megafunctions/altdpram.inc                                              ;             ;
-; db/altsyncram_cbr1.tdf                                             ; yes             ; Auto-Generated Megafunction                  ; /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/altsyncram_cbr1.tdf                                             ;             ;
-; db/altsyncram_nih2.tdf                                             ; yes             ; Auto-Generated Megafunction                  ; /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/altsyncram_nih2.tdf                                             ;             ;
-; b_q.mif                                                            ; yes             ; Auto-Found Memory Initialization File        ; /home/aluno/Documentos/14041830/PBL-SD-HRM-main/b_q.mif                                                            ;             ;
-; sld_mod_ram_rom.vhd                                                ; yes             ; Encrypted Megafunction                       ; /opt/intelFPGA_lite/23.1/quartus/libraries/megafunctions/sld_mod_ram_rom.vhd                                       ;             ;
-; sld_jtag_endpoint_adapter.vhd                                      ; yes             ; Encrypted Megafunction                       ; /opt/intelFPGA_lite/23.1/quartus/libraries/megafunctions/sld_jtag_endpoint_adapter.vhd                             ;             ;
-; sld_jtag_endpoint_adapter_impl.sv                                  ; yes             ; Encrypted Megafunction                       ; /opt/intelFPGA_lite/23.1/quartus/libraries/megafunctions/sld_jtag_endpoint_adapter_impl.sv                         ;             ;
-; sld_rom_sr.vhd                                                     ; yes             ; Encrypted Megafunction                       ; /opt/intelFPGA_lite/23.1/quartus/libraries/megafunctions/sld_rom_sr.vhd                                            ;             ;
-; db/altsyncram_gsr1.tdf                                             ; yes             ; Auto-Generated Megafunction                  ; /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/altsyncram_gsr1.tdf                                             ;             ;
-; db/altsyncram_49i2.tdf                                             ; yes             ; Auto-Generated Megafunction                  ; /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/altsyncram_49i2.tdf                                             ;             ;
-; W_in_q.mif                                                         ; yes             ; Auto-Found Memory Initialization File        ; /home/aluno/Documentos/14041830/PBL-SD-HRM-main/W_in_q.mif                                                         ;             ;
-; db/decode_qma.tdf                                                  ; yes             ; Auto-Generated Megafunction                  ; /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/decode_qma.tdf                                                  ;             ;
-; db/decode_j2a.tdf                                                  ; yes             ; Auto-Generated Megafunction                  ; /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/decode_j2a.tdf                                                  ;             ;
-; db/mux_pib.tdf                                                     ; yes             ; Auto-Generated Megafunction                  ; /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/mux_pib.tdf                                                     ;             ;
-; db/altsyncram_unr1.tdf                                             ; yes             ; Auto-Generated Megafunction                  ; /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/altsyncram_unr1.tdf                                             ;             ;
-; db/altsyncram_72i2.tdf                                             ; yes             ; Auto-Generated Megafunction                  ; /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/altsyncram_72i2.tdf                                             ;             ;
-; beta_q.mif                                                         ; yes             ; Auto-Found Memory Initialization File        ; /home/aluno/Documentos/14041830/PBL-SD-HRM-main/beta_q.mif                                                         ;             ;
-; db/altsyncram_cip1.tdf                                             ; yes             ; Auto-Generated Megafunction                  ; /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/altsyncram_cip1.tdf                                             ;             ;
-; db/altsyncram_buf2.tdf                                             ; yes             ; Auto-Generated Megafunction                  ; /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/altsyncram_buf2.tdf                                             ;             ;
-; sld_hub.vhd                                                        ; yes             ; Encrypted Megafunction                       ; /opt/intelFPGA_lite/23.1/quartus/libraries/megafunctions/sld_hub.vhd                                               ; altera_sld  ;
-; db/ip/sld666f9a97/alt_sld_fab.v                                    ; yes             ; Encrypted Auto-Found Verilog HDL File        ; /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/ip/sld666f9a97/alt_sld_fab.v                                    ; alt_sld_fab ;
-; db/ip/sld666f9a97/submodules/alt_sld_fab_alt_sld_fab.v             ; yes             ; Encrypted Auto-Found Verilog HDL File        ; /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/ip/sld666f9a97/submodules/alt_sld_fab_alt_sld_fab.v             ; alt_sld_fab ;
-; db/ip/sld666f9a97/submodules/alt_sld_fab_alt_sld_fab_ident.sv      ; yes             ; Auto-Found SystemVerilog HDL File            ; /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/ip/sld666f9a97/submodules/alt_sld_fab_alt_sld_fab_ident.sv      ; alt_sld_fab ;
-; db/ip/sld666f9a97/submodules/alt_sld_fab_alt_sld_fab_presplit.sv   ; yes             ; Encrypted Auto-Found SystemVerilog HDL File  ; /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/ip/sld666f9a97/submodules/alt_sld_fab_alt_sld_fab_presplit.sv   ; alt_sld_fab ;
-; db/ip/sld666f9a97/submodules/alt_sld_fab_alt_sld_fab_sldfabric.vhd ; yes             ; Encrypted Auto-Found VHDL File               ; /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/ip/sld666f9a97/submodules/alt_sld_fab_alt_sld_fab_sldfabric.vhd ; alt_sld_fab ;
-; db/ip/sld666f9a97/submodules/alt_sld_fab_alt_sld_fab_splitter.sv   ; yes             ; Encrypted Auto-Found SystemVerilog HDL File  ; /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/ip/sld666f9a97/submodules/alt_sld_fab_alt_sld_fab_splitter.sv   ; alt_sld_fab ;
-; sld_jtag_hub.vhd                                                   ; yes             ; Encrypted Megafunction                       ; /opt/intelFPGA_lite/23.1/quartus/libraries/megafunctions/sld_jtag_hub.vhd                                          ;             ;
-+--------------------------------------------------------------------+-----------------+----------------------------------------------+--------------------------------------------------------------------------------------------------------------------+-------------+
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                                                                                                                                                      ;
++--------------------------------------------------------------------+-----------------+----------------------------------------------+-------------------------------------------------------------------------------------------------------------------------+-------------+
+; File Name with User-Entered Path                                   ; Used in Netlist ; File Type                                    ; File Name with Absolute Path                                                                                            ; Library     ;
++--------------------------------------------------------------------+-----------------+----------------------------------------------+-------------------------------------------------------------------------------------------------------------------------+-------------+
+; pbl.v                                                              ; yes             ; User Verilog HDL File                        ; /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/pbl.v                                                              ;             ;
+; top_level.v                                                        ; yes             ; User Verilog HDL File                        ; /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/top_level.v                                                        ;             ;
+; Pesos.v                                                            ; yes             ; User Wizard-Generated File                   ; /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/Pesos.v                                                            ;             ;
+; Beta.v                                                             ; yes             ; User Wizard-Generated File                   ; /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/Beta.v                                                             ;             ;
+; Bias.v                                                             ; yes             ; User Wizard-Generated File                   ; /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/Bias.v                                                             ;             ;
+; hex7seg.v                                                          ; yes             ; User Verilog HDL File                        ; /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/hex7seg.v                                                          ;             ;
+; mac_q412.v                                                         ; yes             ; User Verilog HDL File                        ; /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/mac_q412.v                                                         ;             ;
+; argmax10.v                                                         ; yes             ; User Verilog HDL File                        ; /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/argmax10.v                                                         ;             ;
+; tanh_lut.v                                                         ; yes             ; User Verilog HDL File                        ; /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/tanh_lut.v                                                         ;             ;
+; IMG.v                                                              ; yes             ; User Wizard-Generated File                   ; /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/IMG.v                                                              ;             ;
+; pbl_infer.v                                                        ; yes             ; User Verilog HDL File                        ; /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/pbl_infer.v                                                        ;             ;
+; pbl_ctrl.v                                                         ; yes             ; User Verilog HDL File                        ; /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/pbl_ctrl.v                                                         ;             ;
+; altsyncram.tdf                                                     ; yes             ; Megafunction                                 ; /opt/intelFPGA_lite/23.1/quartus/libraries/megafunctions/altsyncram.tdf                                                 ;             ;
+; stratix_ram_block.inc                                              ; yes             ; Megafunction                                 ; /opt/intelFPGA_lite/23.1/quartus/libraries/megafunctions/stratix_ram_block.inc                                          ;             ;
+; lpm_mux.inc                                                        ; yes             ; Megafunction                                 ; /opt/intelFPGA_lite/23.1/quartus/libraries/megafunctions/lpm_mux.inc                                                    ;             ;
+; lpm_decode.inc                                                     ; yes             ; Megafunction                                 ; /opt/intelFPGA_lite/23.1/quartus/libraries/megafunctions/lpm_decode.inc                                                 ;             ;
+; aglobal231.inc                                                     ; yes             ; Megafunction                                 ; /opt/intelFPGA_lite/23.1/quartus/libraries/megafunctions/aglobal231.inc                                                 ;             ;
+; a_rdenreg.inc                                                      ; yes             ; Megafunction                                 ; /opt/intelFPGA_lite/23.1/quartus/libraries/megafunctions/a_rdenreg.inc                                                  ;             ;
+; altrom.inc                                                         ; yes             ; Megafunction                                 ; /opt/intelFPGA_lite/23.1/quartus/libraries/megafunctions/altrom.inc                                                     ;             ;
+; altram.inc                                                         ; yes             ; Megafunction                                 ; /opt/intelFPGA_lite/23.1/quartus/libraries/megafunctions/altram.inc                                                     ;             ;
+; altdpram.inc                                                       ; yes             ; Megafunction                                 ; /opt/intelFPGA_lite/23.1/quartus/libraries/megafunctions/altdpram.inc                                                   ;             ;
+; db/altsyncram_cbr1.tdf                                             ; yes             ; Auto-Generated Megafunction                  ; /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/altsyncram_cbr1.tdf                                             ;             ;
+; db/altsyncram_nih2.tdf                                             ; yes             ; Auto-Generated Megafunction                  ; /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/altsyncram_nih2.tdf                                             ;             ;
+; b_q.mif                                                            ; yes             ; Auto-Found Memory Initialization File        ; /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/b_q.mif                                                            ;             ;
+; sld_mod_ram_rom.vhd                                                ; yes             ; Encrypted Megafunction                       ; /opt/intelFPGA_lite/23.1/quartus/libraries/megafunctions/sld_mod_ram_rom.vhd                                            ;             ;
+; sld_jtag_endpoint_adapter.vhd                                      ; yes             ; Encrypted Megafunction                       ; /opt/intelFPGA_lite/23.1/quartus/libraries/megafunctions/sld_jtag_endpoint_adapter.vhd                                  ;             ;
+; sld_jtag_endpoint_adapter_impl.sv                                  ; yes             ; Encrypted Megafunction                       ; /opt/intelFPGA_lite/23.1/quartus/libraries/megafunctions/sld_jtag_endpoint_adapter_impl.sv                              ;             ;
+; sld_rom_sr.vhd                                                     ; yes             ; Encrypted Megafunction                       ; /opt/intelFPGA_lite/23.1/quartus/libraries/megafunctions/sld_rom_sr.vhd                                                 ;             ;
+; db/altsyncram_gsr1.tdf                                             ; yes             ; Auto-Generated Megafunction                  ; /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/altsyncram_gsr1.tdf                                             ;             ;
+; db/altsyncram_49i2.tdf                                             ; yes             ; Auto-Generated Megafunction                  ; /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/altsyncram_49i2.tdf                                             ;             ;
+; W_in_q.mif                                                         ; yes             ; Auto-Found Memory Initialization File        ; /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/W_in_q.mif                                                         ;             ;
+; db/decode_qma.tdf                                                  ; yes             ; Auto-Generated Megafunction                  ; /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/decode_qma.tdf                                                  ;             ;
+; db/decode_j2a.tdf                                                  ; yes             ; Auto-Generated Megafunction                  ; /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/decode_j2a.tdf                                                  ;             ;
+; db/mux_pib.tdf                                                     ; yes             ; Auto-Generated Megafunction                  ; /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/mux_pib.tdf                                                     ;             ;
+; db/altsyncram_unr1.tdf                                             ; yes             ; Auto-Generated Megafunction                  ; /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/altsyncram_unr1.tdf                                             ;             ;
+; db/altsyncram_72i2.tdf                                             ; yes             ; Auto-Generated Megafunction                  ; /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/altsyncram_72i2.tdf                                             ;             ;
+; beta_q.mif                                                         ; yes             ; Auto-Found Memory Initialization File        ; /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/beta_q.mif                                                         ;             ;
+; db/altsyncram_cip1.tdf                                             ; yes             ; Auto-Generated Megafunction                  ; /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/altsyncram_cip1.tdf                                             ;             ;
+; db/altsyncram_buf2.tdf                                             ; yes             ; Auto-Generated Megafunction                  ; /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/altsyncram_buf2.tdf                                             ;             ;
+; sld_hub.vhd                                                        ; yes             ; Encrypted Megafunction                       ; /opt/intelFPGA_lite/23.1/quartus/libraries/megafunctions/sld_hub.vhd                                                    ; altera_sld  ;
+; db/ip/sld666f9a97/alt_sld_fab.v                                    ; yes             ; Encrypted Auto-Found Verilog HDL File        ; /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/ip/sld666f9a97/alt_sld_fab.v                                    ; alt_sld_fab ;
+; db/ip/sld666f9a97/submodules/alt_sld_fab_alt_sld_fab.v             ; yes             ; Encrypted Auto-Found Verilog HDL File        ; /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/ip/sld666f9a97/submodules/alt_sld_fab_alt_sld_fab.v             ; alt_sld_fab ;
+; db/ip/sld666f9a97/submodules/alt_sld_fab_alt_sld_fab_ident.sv      ; yes             ; Auto-Found SystemVerilog HDL File            ; /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/ip/sld666f9a97/submodules/alt_sld_fab_alt_sld_fab_ident.sv      ; alt_sld_fab ;
+; db/ip/sld666f9a97/submodules/alt_sld_fab_alt_sld_fab_presplit.sv   ; yes             ; Encrypted Auto-Found SystemVerilog HDL File  ; /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/ip/sld666f9a97/submodules/alt_sld_fab_alt_sld_fab_presplit.sv   ; alt_sld_fab ;
+; db/ip/sld666f9a97/submodules/alt_sld_fab_alt_sld_fab_sldfabric.vhd ; yes             ; Encrypted Auto-Found VHDL File               ; /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/ip/sld666f9a97/submodules/alt_sld_fab_alt_sld_fab_sldfabric.vhd ; alt_sld_fab ;
+; db/ip/sld666f9a97/submodules/alt_sld_fab_alt_sld_fab_splitter.sv   ; yes             ; Encrypted Auto-Found SystemVerilog HDL File  ; /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/ip/sld666f9a97/submodules/alt_sld_fab_alt_sld_fab_splitter.sv   ; alt_sld_fab ;
+; sld_jtag_hub.vhd                                                   ; yes             ; Encrypted Megafunction                       ; /opt/intelFPGA_lite/23.1/quartus/libraries/megafunctions/sld_jtag_hub.vhd                                               ;             ;
++--------------------------------------------------------------------+-----------------+----------------------------------------------+-------------------------------------------------------------------------------------------------------------------------+-------------+
 
 
 +---------------------------------------------------------+
@@ -1406,7 +1408,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:00:05     ;
+; Top            ; 00:00:06     ;
 +----------------+--------------+
 
 
@@ -1416,48 +1418,48 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 23.1std.0 Build 991 11/28/2023 SC Lite Edition
-    Info: Processing started: Tue Apr 14 19:29:25 2026
+    Info: Processing started: Wed Apr 15 09:50:51 2026
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off pbl -c pbl
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
-Info (20030): Parallel compilation is enabled and will use 14 of the 14 processors detected
+Info (20030): Parallel compilation is enabled and will use 12 of the 12 processors detected
 Info (12021): Found 1 design units, including 1 entities, in source file pbl.v
-    Info (12023): Found entity 1: pbl File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/pbl.v Line: 1
+    Info (12023): Found entity 1: pbl File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/pbl.v Line: 1
 Info (12021): Found 1 design units, including 1 entities, in source file top_level.v
-    Info (12023): Found entity 1: top_level File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/top_level.v Line: 1
+    Info (12023): Found entity 1: top_level File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/top_level.v Line: 1
 Info (12021): Found 1 design units, including 1 entities, in source file Pesos.v
-    Info (12023): Found entity 1: Pesos File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/Pesos.v Line: 40
+    Info (12023): Found entity 1: Pesos File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/Pesos.v Line: 40
 Info (12021): Found 1 design units, including 1 entities, in source file Beta.v
-    Info (12023): Found entity 1: Beta File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/Beta.v Line: 40
+    Info (12023): Found entity 1: Beta File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/Beta.v Line: 40
 Info (12021): Found 1 design units, including 1 entities, in source file Bias.v
-    Info (12023): Found entity 1: Bias File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/Bias.v Line: 40
+    Info (12023): Found entity 1: Bias File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/Bias.v Line: 40
 Info (12021): Found 1 design units, including 1 entities, in source file hex7seg.v
-    Info (12023): Found entity 1: hex7seg File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/hex7seg.v Line: 1
+    Info (12023): Found entity 1: hex7seg File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/hex7seg.v Line: 1
 Info (12021): Found 1 design units, including 1 entities, in source file mac_q412.v
-    Info (12023): Found entity 1: mac_q412 File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/mac_q412.v Line: 1
+    Info (12023): Found entity 1: mac_q412 File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/mac_q412.v Line: 1
 Info (12021): Found 1 design units, including 1 entities, in source file argmax10.v
-    Info (12023): Found entity 1: argmax10 File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/argmax10.v Line: 1
+    Info (12023): Found entity 1: argmax10 File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/argmax10.v Line: 1
 Info (12021): Found 1 design units, including 1 entities, in source file tanh_lut.v
-    Info (12023): Found entity 1: tanh_lut File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/tanh_lut.v Line: 1
+    Info (12023): Found entity 1: tanh_lut File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/tanh_lut.v Line: 1
 Info (12021): Found 1 design units, including 1 entities, in source file IMG.v
-    Info (12023): Found entity 1: IMG File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/IMG.v Line: 40
-Warning (10259): Verilog HDL error at pbl_infer.v(100): constant value overflow File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/pbl_infer.v Line: 100
+    Info (12023): Found entity 1: IMG File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/IMG.v Line: 40
+Warning (10259): Verilog HDL error at pbl_infer.v(100): constant value overflow File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/pbl_infer.v Line: 100
 Info (12021): Found 1 design units, including 1 entities, in source file pbl_infer.v
-    Info (12023): Found entity 1: pbl_infer File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/pbl_infer.v Line: 1
+    Info (12023): Found entity 1: pbl_infer File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/pbl_infer.v Line: 1
 Info (12021): Found 1 design units, including 1 entities, in source file pbl_ctrl.v
-    Info (12023): Found entity 1: pbl_ctrl File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/pbl_ctrl.v Line: 1
+    Info (12023): Found entity 1: pbl_ctrl File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/pbl_ctrl.v Line: 1
 Info (12127): Elaborating entity "top_level" for the top level hierarchy
-Info (12128): Elaborating entity "pbl" for hierarchy "pbl:u_pbl" File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/top_level.v Line: 149
-Info (12128): Elaborating entity "pbl_ctrl" for hierarchy "pbl:u_pbl|pbl_ctrl:u_ctrl" File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/pbl.v Line: 88
-Info (12128): Elaborating entity "pbl_infer" for hierarchy "pbl:u_pbl|pbl_infer:u_infer" File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/pbl.v Line: 105
-Warning (10240): Verilog HDL Always Construct warning at pbl_infer.v(131): inferring latch(es) for variable "i", which holds its previous value in one or more paths through the always construct File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/pbl_infer.v Line: 131
-Info (12128): Elaborating entity "mac_q412" for hierarchy "pbl:u_pbl|pbl_infer:u_infer|mac_q412:u_mac_hidden" File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/pbl_infer.v Line: 83
-Info (12128): Elaborating entity "tanh_lut" for hierarchy "pbl:u_pbl|pbl_infer:u_infer|tanh_lut:u_tanh" File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/pbl_infer.v Line: 113
-Info (12128): Elaborating entity "argmax10" for hierarchy "pbl:u_pbl|pbl_infer:u_infer|argmax10:u_argmax" File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/pbl_infer.v Line: 125
-Info (12128): Elaborating entity "hex7seg" for hierarchy "hex7seg:u_hex0" File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/top_level.v Line: 164
-Info (12128): Elaborating entity "Bias" for hierarchy "Bias:u_bias" File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/top_level.v Line: 172
-Info (12128): Elaborating entity "altsyncram" for hierarchy "Bias:u_bias|altsyncram:altsyncram_component" File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/Bias.v Line: 86
-Info (12130): Elaborated megafunction instantiation "Bias:u_bias|altsyncram:altsyncram_component" File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/Bias.v Line: 86
-Info (12133): Instantiated megafunction "Bias:u_bias|altsyncram:altsyncram_component" with the following parameter: File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/Bias.v Line: 86
+Info (12128): Elaborating entity "pbl" for hierarchy "pbl:u_pbl" File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/top_level.v Line: 149
+Info (12128): Elaborating entity "pbl_ctrl" for hierarchy "pbl:u_pbl|pbl_ctrl:u_ctrl" File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/pbl.v Line: 88
+Info (12128): Elaborating entity "pbl_infer" for hierarchy "pbl:u_pbl|pbl_infer:u_infer" File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/pbl.v Line: 105
+Warning (10240): Verilog HDL Always Construct warning at pbl_infer.v(131): inferring latch(es) for variable "i", which holds its previous value in one or more paths through the always construct File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/pbl_infer.v Line: 131
+Info (12128): Elaborating entity "mac_q412" for hierarchy "pbl:u_pbl|pbl_infer:u_infer|mac_q412:u_mac_hidden" File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/pbl_infer.v Line: 83
+Info (12128): Elaborating entity "tanh_lut" for hierarchy "pbl:u_pbl|pbl_infer:u_infer|tanh_lut:u_tanh" File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/pbl_infer.v Line: 113
+Info (12128): Elaborating entity "argmax10" for hierarchy "pbl:u_pbl|pbl_infer:u_infer|argmax10:u_argmax" File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/pbl_infer.v Line: 125
+Info (12128): Elaborating entity "hex7seg" for hierarchy "hex7seg:u_hex0" File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/top_level.v Line: 164
+Info (12128): Elaborating entity "Bias" for hierarchy "Bias:u_bias" File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/top_level.v Line: 172
+Info (12128): Elaborating entity "altsyncram" for hierarchy "Bias:u_bias|altsyncram:altsyncram_component" File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/Bias.v Line: 86
+Info (12130): Elaborated megafunction instantiation "Bias:u_bias|altsyncram:altsyncram_component" File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/Bias.v Line: 86
+Info (12133): Instantiated megafunction "Bias:u_bias|altsyncram:altsyncram_component" with the following parameter: File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/Bias.v Line: 86
     Info (12134): Parameter "clock_enable_input_a" = "BYPASS"
     Info (12134): Parameter "clock_enable_output_a" = "BYPASS"
     Info (12134): Parameter "init_file" = "b_q.mif"
@@ -1475,14 +1477,14 @@ Info (12133): Instantiated megafunction "Bias:u_bias|altsyncram:altsyncram_compo
     Info (12134): Parameter "width_a" = "16"
     Info (12134): Parameter "width_byteena_a" = "1"
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_cbr1.tdf
-    Info (12023): Found entity 1: altsyncram_cbr1 File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/altsyncram_cbr1.tdf Line: 28
+    Info (12023): Found entity 1: altsyncram_cbr1 File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/altsyncram_cbr1.tdf Line: 28
 Info (12128): Elaborating entity "altsyncram_cbr1" for hierarchy "Bias:u_bias|altsyncram:altsyncram_component|altsyncram_cbr1:auto_generated" File: /opt/intelFPGA_lite/23.1/quartus/libraries/megafunctions/altsyncram.tdf Line: 792
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_nih2.tdf
-    Info (12023): Found entity 1: altsyncram_nih2 File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/altsyncram_nih2.tdf Line: 28
-Info (12128): Elaborating entity "altsyncram_nih2" for hierarchy "Bias:u_bias|altsyncram:altsyncram_component|altsyncram_cbr1:auto_generated|altsyncram_nih2:altsyncram1" File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/altsyncram_cbr1.tdf Line: 37
-Info (12128): Elaborating entity "sld_mod_ram_rom" for hierarchy "Bias:u_bias|altsyncram:altsyncram_component|altsyncram_cbr1:auto_generated|sld_mod_ram_rom:mgl_prim2" File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/altsyncram_cbr1.tdf Line: 38
-Info (12130): Elaborated megafunction instantiation "Bias:u_bias|altsyncram:altsyncram_component|altsyncram_cbr1:auto_generated|sld_mod_ram_rom:mgl_prim2" File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/altsyncram_cbr1.tdf Line: 38
-Info (12133): Instantiated megafunction "Bias:u_bias|altsyncram:altsyncram_component|altsyncram_cbr1:auto_generated|sld_mod_ram_rom:mgl_prim2" with the following parameter: File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/altsyncram_cbr1.tdf Line: 38
+    Info (12023): Found entity 1: altsyncram_nih2 File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/altsyncram_nih2.tdf Line: 28
+Info (12128): Elaborating entity "altsyncram_nih2" for hierarchy "Bias:u_bias|altsyncram:altsyncram_component|altsyncram_cbr1:auto_generated|altsyncram_nih2:altsyncram1" File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/altsyncram_cbr1.tdf Line: 37
+Info (12128): Elaborating entity "sld_mod_ram_rom" for hierarchy "Bias:u_bias|altsyncram:altsyncram_component|altsyncram_cbr1:auto_generated|sld_mod_ram_rom:mgl_prim2" File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/altsyncram_cbr1.tdf Line: 38
+Info (12130): Elaborated megafunction instantiation "Bias:u_bias|altsyncram:altsyncram_component|altsyncram_cbr1:auto_generated|sld_mod_ram_rom:mgl_prim2" File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/altsyncram_cbr1.tdf Line: 38
+Info (12133): Instantiated megafunction "Bias:u_bias|altsyncram:altsyncram_component|altsyncram_cbr1:auto_generated|sld_mod_ram_rom:mgl_prim2" with the following parameter: File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/altsyncram_cbr1.tdf Line: 38
     Info (12134): Parameter "CVALUE" = "0000000000000000"
     Info (12134): Parameter "IS_DATA_IN_RAM" = "1"
     Info (12134): Parameter "IS_READABLE" = "1"
@@ -1494,10 +1496,10 @@ Info (12133): Instantiated megafunction "Bias:u_bias|altsyncram:altsyncram_compo
 Info (12128): Elaborating entity "sld_jtag_endpoint_adapter" for hierarchy "Bias:u_bias|altsyncram:altsyncram_component|altsyncram_cbr1:auto_generated|sld_mod_ram_rom:mgl_prim2|sld_jtag_endpoint_adapter:jtag_signal_adapter" File: /opt/intelFPGA_lite/23.1/quartus/libraries/megafunctions/sld_mod_ram_rom.vhd Line: 302
 Info (12128): Elaborating entity "sld_jtag_endpoint_adapter_impl" for hierarchy "Bias:u_bias|altsyncram:altsyncram_component|altsyncram_cbr1:auto_generated|sld_mod_ram_rom:mgl_prim2|sld_jtag_endpoint_adapter:jtag_signal_adapter|sld_jtag_endpoint_adapter_impl:sld_jtag_endpoint_adapter_impl_inst" File: /opt/intelFPGA_lite/23.1/quartus/libraries/megafunctions/sld_jtag_endpoint_adapter.vhd Line: 232
 Info (12128): Elaborating entity "sld_rom_sr" for hierarchy "Bias:u_bias|altsyncram:altsyncram_component|altsyncram_cbr1:auto_generated|sld_mod_ram_rom:mgl_prim2|sld_rom_sr:\ram_rom_logic_gen:name_gen:info_rom_sr" File: /opt/intelFPGA_lite/23.1/quartus/libraries/megafunctions/sld_mod_ram_rom.vhd Line: 828
-Info (12128): Elaborating entity "Pesos" for hierarchy "Pesos:u_pesos" File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/top_level.v Line: 179
-Info (12128): Elaborating entity "altsyncram" for hierarchy "Pesos:u_pesos|altsyncram:altsyncram_component" File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/Pesos.v Line: 86
-Info (12130): Elaborated megafunction instantiation "Pesos:u_pesos|altsyncram:altsyncram_component" File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/Pesos.v Line: 86
-Info (12133): Instantiated megafunction "Pesos:u_pesos|altsyncram:altsyncram_component" with the following parameter: File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/Pesos.v Line: 86
+Info (12128): Elaborating entity "Pesos" for hierarchy "Pesos:u_pesos" File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/top_level.v Line: 179
+Info (12128): Elaborating entity "altsyncram" for hierarchy "Pesos:u_pesos|altsyncram:altsyncram_component" File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/Pesos.v Line: 86
+Info (12130): Elaborated megafunction instantiation "Pesos:u_pesos|altsyncram:altsyncram_component" File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/Pesos.v Line: 86
+Info (12133): Instantiated megafunction "Pesos:u_pesos|altsyncram:altsyncram_component" with the following parameter: File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/Pesos.v Line: 86
     Info (12134): Parameter "clock_enable_input_a" = "BYPASS"
     Info (12134): Parameter "clock_enable_output_a" = "BYPASS"
     Info (12134): Parameter "init_file" = "W_in_q.mif"
@@ -1515,23 +1517,23 @@ Info (12133): Instantiated megafunction "Pesos:u_pesos|altsyncram:altsyncram_com
     Info (12134): Parameter "width_a" = "16"
     Info (12134): Parameter "width_byteena_a" = "1"
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_gsr1.tdf
-    Info (12023): Found entity 1: altsyncram_gsr1 File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/altsyncram_gsr1.tdf Line: 28
+    Info (12023): Found entity 1: altsyncram_gsr1 File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/altsyncram_gsr1.tdf Line: 28
 Info (12128): Elaborating entity "altsyncram_gsr1" for hierarchy "Pesos:u_pesos|altsyncram:altsyncram_component|altsyncram_gsr1:auto_generated" File: /opt/intelFPGA_lite/23.1/quartus/libraries/megafunctions/altsyncram.tdf Line: 792
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_49i2.tdf
-    Info (12023): Found entity 1: altsyncram_49i2 File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/altsyncram_49i2.tdf Line: 34
-Info (12128): Elaborating entity "altsyncram_49i2" for hierarchy "Pesos:u_pesos|altsyncram:altsyncram_component|altsyncram_gsr1:auto_generated|altsyncram_49i2:altsyncram1" File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/altsyncram_gsr1.tdf Line: 37
+    Info (12023): Found entity 1: altsyncram_49i2 File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/altsyncram_49i2.tdf Line: 34
+Info (12128): Elaborating entity "altsyncram_49i2" for hierarchy "Pesos:u_pesos|altsyncram:altsyncram_component|altsyncram_gsr1:auto_generated|altsyncram_49i2:altsyncram1" File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/altsyncram_gsr1.tdf Line: 37
 Info (12021): Found 1 design units, including 1 entities, in source file db/decode_qma.tdf
-    Info (12023): Found entity 1: decode_qma File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/decode_qma.tdf Line: 23
-Info (12128): Elaborating entity "decode_qma" for hierarchy "Pesos:u_pesos|altsyncram:altsyncram_component|altsyncram_gsr1:auto_generated|altsyncram_49i2:altsyncram1|decode_qma:decode4" File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/altsyncram_49i2.tdf Line: 51
+    Info (12023): Found entity 1: decode_qma File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/decode_qma.tdf Line: 23
+Info (12128): Elaborating entity "decode_qma" for hierarchy "Pesos:u_pesos|altsyncram:altsyncram_component|altsyncram_gsr1:auto_generated|altsyncram_49i2:altsyncram1|decode_qma:decode4" File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/altsyncram_49i2.tdf Line: 51
 Info (12021): Found 1 design units, including 1 entities, in source file db/decode_j2a.tdf
-    Info (12023): Found entity 1: decode_j2a File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/decode_j2a.tdf Line: 23
-Info (12128): Elaborating entity "decode_j2a" for hierarchy "Pesos:u_pesos|altsyncram:altsyncram_component|altsyncram_gsr1:auto_generated|altsyncram_49i2:altsyncram1|decode_j2a:rden_decode_a" File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/altsyncram_49i2.tdf Line: 53
+    Info (12023): Found entity 1: decode_j2a File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/decode_j2a.tdf Line: 23
+Info (12128): Elaborating entity "decode_j2a" for hierarchy "Pesos:u_pesos|altsyncram:altsyncram_component|altsyncram_gsr1:auto_generated|altsyncram_49i2:altsyncram1|decode_j2a:rden_decode_a" File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/altsyncram_49i2.tdf Line: 53
 Info (12021): Found 1 design units, including 1 entities, in source file db/mux_pib.tdf
-    Info (12023): Found entity 1: mux_pib File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/mux_pib.tdf Line: 23
-Info (12128): Elaborating entity "mux_pib" for hierarchy "Pesos:u_pesos|altsyncram:altsyncram_component|altsyncram_gsr1:auto_generated|altsyncram_49i2:altsyncram1|mux_pib:mux6" File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/altsyncram_49i2.tdf Line: 55
-Info (12128): Elaborating entity "sld_mod_ram_rom" for hierarchy "Pesos:u_pesos|altsyncram:altsyncram_component|altsyncram_gsr1:auto_generated|sld_mod_ram_rom:mgl_prim2" File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/altsyncram_gsr1.tdf Line: 38
-Info (12130): Elaborated megafunction instantiation "Pesos:u_pesos|altsyncram:altsyncram_component|altsyncram_gsr1:auto_generated|sld_mod_ram_rom:mgl_prim2" File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/altsyncram_gsr1.tdf Line: 38
-Info (12133): Instantiated megafunction "Pesos:u_pesos|altsyncram:altsyncram_component|altsyncram_gsr1:auto_generated|sld_mod_ram_rom:mgl_prim2" with the following parameter: File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/altsyncram_gsr1.tdf Line: 38
+    Info (12023): Found entity 1: mux_pib File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/mux_pib.tdf Line: 23
+Info (12128): Elaborating entity "mux_pib" for hierarchy "Pesos:u_pesos|altsyncram:altsyncram_component|altsyncram_gsr1:auto_generated|altsyncram_49i2:altsyncram1|mux_pib:mux6" File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/altsyncram_49i2.tdf Line: 55
+Info (12128): Elaborating entity "sld_mod_ram_rom" for hierarchy "Pesos:u_pesos|altsyncram:altsyncram_component|altsyncram_gsr1:auto_generated|sld_mod_ram_rom:mgl_prim2" File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/altsyncram_gsr1.tdf Line: 38
+Info (12130): Elaborated megafunction instantiation "Pesos:u_pesos|altsyncram:altsyncram_component|altsyncram_gsr1:auto_generated|sld_mod_ram_rom:mgl_prim2" File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/altsyncram_gsr1.tdf Line: 38
+Info (12133): Instantiated megafunction "Pesos:u_pesos|altsyncram:altsyncram_component|altsyncram_gsr1:auto_generated|sld_mod_ram_rom:mgl_prim2" with the following parameter: File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/altsyncram_gsr1.tdf Line: 38
     Info (12134): Parameter "CVALUE" = "0000000000000000"
     Info (12134): Parameter "IS_DATA_IN_RAM" = "1"
     Info (12134): Parameter "IS_READABLE" = "1"
@@ -1540,10 +1542,10 @@ Info (12133): Instantiated megafunction "Pesos:u_pesos|altsyncram:altsyncram_com
     Info (12134): Parameter "SHIFT_COUNT_BITS" = "5"
     Info (12134): Parameter "WIDTH_WORD" = "16"
     Info (12134): Parameter "WIDTHAD" = "17"
-Info (12128): Elaborating entity "Beta" for hierarchy "Beta:u_beta" File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/top_level.v Line: 186
-Info (12128): Elaborating entity "altsyncram" for hierarchy "Beta:u_beta|altsyncram:altsyncram_component" File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/Beta.v Line: 86
-Info (12130): Elaborated megafunction instantiation "Beta:u_beta|altsyncram:altsyncram_component" File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/Beta.v Line: 86
-Info (12133): Instantiated megafunction "Beta:u_beta|altsyncram:altsyncram_component" with the following parameter: File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/Beta.v Line: 86
+Info (12128): Elaborating entity "Beta" for hierarchy "Beta:u_beta" File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/top_level.v Line: 186
+Info (12128): Elaborating entity "altsyncram" for hierarchy "Beta:u_beta|altsyncram:altsyncram_component" File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/Beta.v Line: 86
+Info (12130): Elaborated megafunction instantiation "Beta:u_beta|altsyncram:altsyncram_component" File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/Beta.v Line: 86
+Info (12133): Instantiated megafunction "Beta:u_beta|altsyncram:altsyncram_component" with the following parameter: File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/Beta.v Line: 86
     Info (12134): Parameter "clock_enable_input_a" = "BYPASS"
     Info (12134): Parameter "clock_enable_output_a" = "BYPASS"
     Info (12134): Parameter "init_file" = "beta_q.mif"
@@ -1561,14 +1563,14 @@ Info (12133): Instantiated megafunction "Beta:u_beta|altsyncram:altsyncram_compo
     Info (12134): Parameter "width_a" = "16"
     Info (12134): Parameter "width_byteena_a" = "1"
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_unr1.tdf
-    Info (12023): Found entity 1: altsyncram_unr1 File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/altsyncram_unr1.tdf Line: 28
+    Info (12023): Found entity 1: altsyncram_unr1 File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/altsyncram_unr1.tdf Line: 28
 Info (12128): Elaborating entity "altsyncram_unr1" for hierarchy "Beta:u_beta|altsyncram:altsyncram_component|altsyncram_unr1:auto_generated" File: /opt/intelFPGA_lite/23.1/quartus/libraries/megafunctions/altsyncram.tdf Line: 792
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_72i2.tdf
-    Info (12023): Found entity 1: altsyncram_72i2 File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/altsyncram_72i2.tdf Line: 28
-Info (12128): Elaborating entity "altsyncram_72i2" for hierarchy "Beta:u_beta|altsyncram:altsyncram_component|altsyncram_unr1:auto_generated|altsyncram_72i2:altsyncram1" File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/altsyncram_unr1.tdf Line: 37
-Info (12128): Elaborating entity "sld_mod_ram_rom" for hierarchy "Beta:u_beta|altsyncram:altsyncram_component|altsyncram_unr1:auto_generated|sld_mod_ram_rom:mgl_prim2" File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/altsyncram_unr1.tdf Line: 38
-Info (12130): Elaborated megafunction instantiation "Beta:u_beta|altsyncram:altsyncram_component|altsyncram_unr1:auto_generated|sld_mod_ram_rom:mgl_prim2" File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/altsyncram_unr1.tdf Line: 38
-Info (12133): Instantiated megafunction "Beta:u_beta|altsyncram:altsyncram_component|altsyncram_unr1:auto_generated|sld_mod_ram_rom:mgl_prim2" with the following parameter: File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/altsyncram_unr1.tdf Line: 38
+    Info (12023): Found entity 1: altsyncram_72i2 File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/altsyncram_72i2.tdf Line: 28
+Info (12128): Elaborating entity "altsyncram_72i2" for hierarchy "Beta:u_beta|altsyncram:altsyncram_component|altsyncram_unr1:auto_generated|altsyncram_72i2:altsyncram1" File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/altsyncram_unr1.tdf Line: 37
+Info (12128): Elaborating entity "sld_mod_ram_rom" for hierarchy "Beta:u_beta|altsyncram:altsyncram_component|altsyncram_unr1:auto_generated|sld_mod_ram_rom:mgl_prim2" File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/altsyncram_unr1.tdf Line: 38
+Info (12130): Elaborated megafunction instantiation "Beta:u_beta|altsyncram:altsyncram_component|altsyncram_unr1:auto_generated|sld_mod_ram_rom:mgl_prim2" File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/altsyncram_unr1.tdf Line: 38
+Info (12133): Instantiated megafunction "Beta:u_beta|altsyncram:altsyncram_component|altsyncram_unr1:auto_generated|sld_mod_ram_rom:mgl_prim2" with the following parameter: File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/altsyncram_unr1.tdf Line: 38
     Info (12134): Parameter "CVALUE" = "0000000000000000"
     Info (12134): Parameter "IS_DATA_IN_RAM" = "1"
     Info (12134): Parameter "IS_READABLE" = "1"
@@ -1577,10 +1579,10 @@ Info (12133): Instantiated megafunction "Beta:u_beta|altsyncram:altsyncram_compo
     Info (12134): Parameter "SHIFT_COUNT_BITS" = "5"
     Info (12134): Parameter "WIDTH_WORD" = "16"
     Info (12134): Parameter "WIDTHAD" = "11"
-Info (12128): Elaborating entity "IMG" for hierarchy "IMG:u_img" File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/top_level.v Line: 193
-Info (12128): Elaborating entity "altsyncram" for hierarchy "IMG:u_img|altsyncram:altsyncram_component" File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/IMG.v Line: 86
-Info (12130): Elaborated megafunction instantiation "IMG:u_img|altsyncram:altsyncram_component" File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/IMG.v Line: 86
-Info (12133): Instantiated megafunction "IMG:u_img|altsyncram:altsyncram_component" with the following parameter: File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/IMG.v Line: 86
+Info (12128): Elaborating entity "IMG" for hierarchy "IMG:u_img" File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/top_level.v Line: 193
+Info (12128): Elaborating entity "altsyncram" for hierarchy "IMG:u_img|altsyncram:altsyncram_component" File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/IMG.v Line: 86
+Info (12130): Elaborated megafunction instantiation "IMG:u_img|altsyncram:altsyncram_component" File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/IMG.v Line: 86
+Info (12133): Instantiated megafunction "IMG:u_img|altsyncram:altsyncram_component" with the following parameter: File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/IMG.v Line: 86
     Info (12134): Parameter "clock_enable_input_a" = "BYPASS"
     Info (12134): Parameter "clock_enable_output_a" = "BYPASS"
     Info (12134): Parameter "intended_device_family" = "Cyclone V"
@@ -1597,14 +1599,14 @@ Info (12133): Instantiated megafunction "IMG:u_img|altsyncram:altsyncram_compone
     Info (12134): Parameter "width_a" = "16"
     Info (12134): Parameter "width_byteena_a" = "1"
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_cip1.tdf
-    Info (12023): Found entity 1: altsyncram_cip1 File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/altsyncram_cip1.tdf Line: 28
+    Info (12023): Found entity 1: altsyncram_cip1 File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/altsyncram_cip1.tdf Line: 28
 Info (12128): Elaborating entity "altsyncram_cip1" for hierarchy "IMG:u_img|altsyncram:altsyncram_component|altsyncram_cip1:auto_generated" File: /opt/intelFPGA_lite/23.1/quartus/libraries/megafunctions/altsyncram.tdf Line: 792
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_buf2.tdf
-    Info (12023): Found entity 1: altsyncram_buf2 File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/altsyncram_buf2.tdf Line: 28
-Info (12128): Elaborating entity "altsyncram_buf2" for hierarchy "IMG:u_img|altsyncram:altsyncram_component|altsyncram_cip1:auto_generated|altsyncram_buf2:altsyncram1" File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/altsyncram_cip1.tdf Line: 37
-Info (12128): Elaborating entity "sld_mod_ram_rom" for hierarchy "IMG:u_img|altsyncram:altsyncram_component|altsyncram_cip1:auto_generated|sld_mod_ram_rom:mgl_prim2" File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/altsyncram_cip1.tdf Line: 38
-Info (12130): Elaborated megafunction instantiation "IMG:u_img|altsyncram:altsyncram_component|altsyncram_cip1:auto_generated|sld_mod_ram_rom:mgl_prim2" File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/altsyncram_cip1.tdf Line: 38
-Info (12133): Instantiated megafunction "IMG:u_img|altsyncram:altsyncram_component|altsyncram_cip1:auto_generated|sld_mod_ram_rom:mgl_prim2" with the following parameter: File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/altsyncram_cip1.tdf Line: 38
+    Info (12023): Found entity 1: altsyncram_buf2 File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/altsyncram_buf2.tdf Line: 28
+Info (12128): Elaborating entity "altsyncram_buf2" for hierarchy "IMG:u_img|altsyncram:altsyncram_component|altsyncram_cip1:auto_generated|altsyncram_buf2:altsyncram1" File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/altsyncram_cip1.tdf Line: 37
+Info (12128): Elaborating entity "sld_mod_ram_rom" for hierarchy "IMG:u_img|altsyncram:altsyncram_component|altsyncram_cip1:auto_generated|sld_mod_ram_rom:mgl_prim2" File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/altsyncram_cip1.tdf Line: 38
+Info (12130): Elaborated megafunction instantiation "IMG:u_img|altsyncram:altsyncram_component|altsyncram_cip1:auto_generated|sld_mod_ram_rom:mgl_prim2" File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/altsyncram_cip1.tdf Line: 38
+Info (12133): Instantiated megafunction "IMG:u_img|altsyncram:altsyncram_component|altsyncram_cip1:auto_generated|sld_mod_ram_rom:mgl_prim2" with the following parameter: File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/altsyncram_cip1.tdf Line: 38
     Info (12134): Parameter "CVALUE" = "0000000000000000"
     Info (12134): Parameter "IS_DATA_IN_RAM" = "1"
     Info (12134): Parameter "IS_READABLE" = "1"
@@ -1614,7 +1616,7 @@ Info (12133): Instantiated megafunction "IMG:u_img|altsyncram:altsyncram_compone
     Info (12134): Parameter "WIDTH_WORD" = "16"
     Info (12134): Parameter "WIDTHAD" = "10"
 Info (11170): Starting IP generation for the debug fabric: alt_sld_fab.
-Info (11172): 2026.04.14.19:29:32 Progress: Loading sld666f9a97/alt_sld_fab_wrapper_hw.tcl
+Info (11172): 2026.04.15.09:51:01 Progress: Loading sld666f9a97/alt_sld_fab_wrapper_hw.tcl
 Info (11172): Alt_sld_fab.alt_sld_fab: SLD fabric agents which did not specify prefer_host were connected to JTAG
 Info (11172): Alt_sld_fab: Generating alt_sld_fab "alt_sld_fab" for QUARTUS_SYNTH
 Info (11172): Alt_sld_fab: "alt_sld_fab" instantiated alt_sld_fab "alt_sld_fab"
@@ -1625,47 +1627,47 @@ Info (11172): Ident: "alt_sld_fab" instantiated altera_connection_identification
 Info (11172): Alt_sld_fab: Done "alt_sld_fab" with 6 modules, 6 files
 Info (11171): Finished IP generation for the debug fabric: alt_sld_fab.
 Info (12021): Found 1 design units, including 1 entities, in source file db/ip/sld666f9a97/alt_sld_fab.v
-    Info (12023): Found entity 1: alt_sld_fab File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/ip/sld666f9a97/alt_sld_fab.v Line: 9
+    Info (12023): Found entity 1: alt_sld_fab File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/ip/sld666f9a97/alt_sld_fab.v Line: 9
 Info (12021): Found 1 design units, including 1 entities, in source file db/ip/sld666f9a97/submodules/alt_sld_fab_alt_sld_fab.v
-    Info (12023): Found entity 1: alt_sld_fab_alt_sld_fab File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/ip/sld666f9a97/submodules/alt_sld_fab_alt_sld_fab.v Line: 9
+    Info (12023): Found entity 1: alt_sld_fab_alt_sld_fab File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/ip/sld666f9a97/submodules/alt_sld_fab_alt_sld_fab.v Line: 9
 Info (12021): Found 1 design units, including 1 entities, in source file db/ip/sld666f9a97/submodules/alt_sld_fab_alt_sld_fab_ident.sv
-    Info (12023): Found entity 1: alt_sld_fab_alt_sld_fab_ident File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/ip/sld666f9a97/submodules/alt_sld_fab_alt_sld_fab_ident.sv Line: 33
+    Info (12023): Found entity 1: alt_sld_fab_alt_sld_fab_ident File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/ip/sld666f9a97/submodules/alt_sld_fab_alt_sld_fab_ident.sv Line: 33
 Info (12021): Found 1 design units, including 1 entities, in source file db/ip/sld666f9a97/submodules/alt_sld_fab_alt_sld_fab_presplit.sv
-    Info (12023): Found entity 1: alt_sld_fab_alt_sld_fab_presplit File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/ip/sld666f9a97/submodules/alt_sld_fab_alt_sld_fab_presplit.sv Line: 3
+    Info (12023): Found entity 1: alt_sld_fab_alt_sld_fab_presplit File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/ip/sld666f9a97/submodules/alt_sld_fab_alt_sld_fab_presplit.sv Line: 3
 Info (12021): Found 2 design units, including 1 entities, in source file db/ip/sld666f9a97/submodules/alt_sld_fab_alt_sld_fab_sldfabric.vhd
-    Info (12022): Found design unit 1: alt_sld_fab_alt_sld_fab_sldfabric-rtl File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/ip/sld666f9a97/submodules/alt_sld_fab_alt_sld_fab_sldfabric.vhd Line: 222
-    Info (12023): Found entity 1: alt_sld_fab_alt_sld_fab_sldfabric File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/ip/sld666f9a97/submodules/alt_sld_fab_alt_sld_fab_sldfabric.vhd Line: 11
+    Info (12022): Found design unit 1: alt_sld_fab_alt_sld_fab_sldfabric-rtl File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/ip/sld666f9a97/submodules/alt_sld_fab_alt_sld_fab_sldfabric.vhd Line: 222
+    Info (12023): Found entity 1: alt_sld_fab_alt_sld_fab_sldfabric File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/ip/sld666f9a97/submodules/alt_sld_fab_alt_sld_fab_sldfabric.vhd Line: 11
 Info (12021): Found 1 design units, including 1 entities, in source file db/ip/sld666f9a97/submodules/alt_sld_fab_alt_sld_fab_splitter.sv
-    Info (12023): Found entity 1: alt_sld_fab_alt_sld_fab_splitter File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/db/ip/sld666f9a97/submodules/alt_sld_fab_alt_sld_fab_splitter.sv Line: 3
+    Info (12023): Found entity 1: alt_sld_fab_alt_sld_fab_splitter File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/db/ip/sld666f9a97/submodules/alt_sld_fab_alt_sld_fab_splitter.sv Line: 3
 Warning (13024): Output pins are stuck at VCC or GND
-    Warning (13410): Pin "hex1[0]" is stuck at VCC File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/top_level.v Line: 19
-    Warning (13410): Pin "hex1[1]" is stuck at VCC File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/top_level.v Line: 19
-    Warning (13410): Pin "hex1[2]" is stuck at VCC File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/top_level.v Line: 19
-    Warning (13410): Pin "hex1[3]" is stuck at VCC File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/top_level.v Line: 19
-    Warning (13410): Pin "hex1[4]" is stuck at VCC File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/top_level.v Line: 19
-    Warning (13410): Pin "hex1[5]" is stuck at VCC File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/top_level.v Line: 19
-    Warning (13410): Pin "hex1[6]" is stuck at VCC File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/top_level.v Line: 19
-    Warning (13410): Pin "hex2[0]" is stuck at VCC File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/top_level.v Line: 20
-    Warning (13410): Pin "hex2[1]" is stuck at VCC File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/top_level.v Line: 20
-    Warning (13410): Pin "hex2[2]" is stuck at VCC File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/top_level.v Line: 20
-    Warning (13410): Pin "hex2[3]" is stuck at VCC File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/top_level.v Line: 20
-    Warning (13410): Pin "hex2[4]" is stuck at VCC File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/top_level.v Line: 20
-    Warning (13410): Pin "hex2[5]" is stuck at VCC File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/top_level.v Line: 20
-    Warning (13410): Pin "hex2[6]" is stuck at VCC File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/top_level.v Line: 20
-    Warning (13410): Pin "hex3[0]" is stuck at VCC File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/top_level.v Line: 21
-    Warning (13410): Pin "hex3[1]" is stuck at VCC File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/top_level.v Line: 21
-    Warning (13410): Pin "hex3[2]" is stuck at VCC File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/top_level.v Line: 21
-    Warning (13410): Pin "hex3[3]" is stuck at VCC File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/top_level.v Line: 21
-    Warning (13410): Pin "hex3[4]" is stuck at VCC File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/top_level.v Line: 21
-    Warning (13410): Pin "hex3[5]" is stuck at VCC File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/top_level.v Line: 21
-    Warning (13410): Pin "hex3[6]" is stuck at VCC File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/top_level.v Line: 21
-    Warning (13410): Pin "hex4[0]" is stuck at VCC File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/top_level.v Line: 22
-    Warning (13410): Pin "hex4[1]" is stuck at VCC File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/top_level.v Line: 22
-    Warning (13410): Pin "hex4[2]" is stuck at VCC File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/top_level.v Line: 22
-    Warning (13410): Pin "hex4[3]" is stuck at VCC File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/top_level.v Line: 22
-    Warning (13410): Pin "hex4[4]" is stuck at VCC File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/top_level.v Line: 22
-    Warning (13410): Pin "hex4[5]" is stuck at VCC File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/top_level.v Line: 22
-    Warning (13410): Pin "hex4[6]" is stuck at VCC File: /home/aluno/Documentos/14041830/PBL-SD-HRM-main/top_level.v Line: 22
+    Warning (13410): Pin "hex1[0]" is stuck at VCC File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/top_level.v Line: 19
+    Warning (13410): Pin "hex1[1]" is stuck at VCC File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/top_level.v Line: 19
+    Warning (13410): Pin "hex1[2]" is stuck at VCC File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/top_level.v Line: 19
+    Warning (13410): Pin "hex1[3]" is stuck at VCC File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/top_level.v Line: 19
+    Warning (13410): Pin "hex1[4]" is stuck at VCC File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/top_level.v Line: 19
+    Warning (13410): Pin "hex1[5]" is stuck at VCC File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/top_level.v Line: 19
+    Warning (13410): Pin "hex1[6]" is stuck at VCC File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/top_level.v Line: 19
+    Warning (13410): Pin "hex2[0]" is stuck at VCC File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/top_level.v Line: 20
+    Warning (13410): Pin "hex2[1]" is stuck at VCC File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/top_level.v Line: 20
+    Warning (13410): Pin "hex2[2]" is stuck at VCC File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/top_level.v Line: 20
+    Warning (13410): Pin "hex2[3]" is stuck at VCC File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/top_level.v Line: 20
+    Warning (13410): Pin "hex2[4]" is stuck at VCC File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/top_level.v Line: 20
+    Warning (13410): Pin "hex2[5]" is stuck at VCC File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/top_level.v Line: 20
+    Warning (13410): Pin "hex2[6]" is stuck at VCC File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/top_level.v Line: 20
+    Warning (13410): Pin "hex3[0]" is stuck at VCC File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/top_level.v Line: 21
+    Warning (13410): Pin "hex3[1]" is stuck at VCC File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/top_level.v Line: 21
+    Warning (13410): Pin "hex3[2]" is stuck at VCC File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/top_level.v Line: 21
+    Warning (13410): Pin "hex3[3]" is stuck at VCC File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/top_level.v Line: 21
+    Warning (13410): Pin "hex3[4]" is stuck at VCC File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/top_level.v Line: 21
+    Warning (13410): Pin "hex3[5]" is stuck at VCC File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/top_level.v Line: 21
+    Warning (13410): Pin "hex3[6]" is stuck at VCC File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/top_level.v Line: 21
+    Warning (13410): Pin "hex4[0]" is stuck at VCC File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/top_level.v Line: 22
+    Warning (13410): Pin "hex4[1]" is stuck at VCC File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/top_level.v Line: 22
+    Warning (13410): Pin "hex4[2]" is stuck at VCC File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/top_level.v Line: 22
+    Warning (13410): Pin "hex4[3]" is stuck at VCC File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/top_level.v Line: 22
+    Warning (13410): Pin "hex4[4]" is stuck at VCC File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/top_level.v Line: 22
+    Warning (13410): Pin "hex4[5]" is stuck at VCC File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/top_level.v Line: 22
+    Warning (13410): Pin "hex4[6]" is stuck at VCC File: /home/aluno/Downloads/PBL-Finalizado/PBL-SD-HRM-main/top_level.v Line: 22
 Info (286031): Timing-Driven Synthesis is running on partition "Top"
 Info (17049): 8 registers lost all their fanouts during netlist optimizations.
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
@@ -1677,9 +1679,9 @@ Info (21057): Implemented 5530 device resources after synthesis - the final reso
     Info (21064): Implemented 256 RAM segments
     Info (21062): Implemented 4 DSP elements
 Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 32 warnings
-    Info: Peak virtual memory: 680 megabytes
-    Info: Processing ended: Tue Apr 14 19:29:43 2026
-    Info: Elapsed time: 00:00:18
+    Info: Peak virtual memory: 676 megabytes
+    Info: Processing ended: Wed Apr 15 09:51:17 2026
+    Info: Elapsed time: 00:00:26
     Info: Total CPU time (on all processors): 00:00:38
 
 
