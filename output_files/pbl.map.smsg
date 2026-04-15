@@ -1,2 +1,0 @@
-Info (10281): Verilog HDL Declaration information at pbl.v(7): object "done" differs only in case from object "DONE" in the same scope File: /home/aluno/Downloads/PBL-SD-HRM-main/pbl.v Line: 7
-Info (10281): Verilog HDL Declaration information at pbl.v(9): object "error" differs only in case from object "ERROR" in the same scope File: /home/aluno/Downloads/PBL-SD-HRM-main/pbl.v Line: 9
