@@ -761,25 +761,34 @@ A frequência máxima de operação é obtida pelo **TimeQuest Timing Analyzer**
 
 | Controle | Função |
 |----------|--------|
-| KEY[0]   | Reset geral (ativo baixo) |
-| KEY[1]   | Executa instrução das chaves (ativo baixo) |
-| SW[2:0]  | Opcode da instrução |
+| KEY[0] | Reset geral (ativo baixo) |
+| KEY[1] | Executa instrução das chaves (ativo baixo) |
+| SW[2:0] | Opcode da instrução (seleciona a operação do sistema) |
 
-| LED      | Indica |
+| Switch | Instrução |
+|--------|-----------|
+| SW = 000 | WRITE_W |
+| SW = 001 | WRITE_BIAS |
+| SW = 010 | WRITE_BETA |
+| SW = 011 | WRITE_IMG |
+| SW = 110 | STATUS |
+| SW = 111 | START |
+
+| LED | Indica |
 |----------|--------|
-| LEDR[9]  | W_in confirmado |
-| LEDR[8]  | Bias confirmado |
-| LEDR[7]  | Beta confirmado |
-| LEDR[6]  | Imagem confirmada |
-| LEDR[3]  | Sistema pronto |
-| LEDR[2]  | Inferência em andamento |
-| LEDR[1]  | Erro |
-| LEDR[0]  | Resultado disponível |
+| LEDR[9] | W_in confirmado |
+| LEDR[8] | Bias confirmado |
+| LEDR[7] | Beta confirmado |
+| LEDR[6] | Imagem confirmada |
+| LEDR[3] | Sistema pronto |
+| LEDR[2] | Inferência em andamento |
+| LEDR[1] | Erro |
+| LEDR[0] | Resultado disponível |
 
 | Display | Indica |
 |---------|--------|
-| HEX0    | Dígito predito (0–9) |
-| HEX5    | Estado atual do sistema (`r`=pronto, `b`=ocupado, `d`=done, `e`=erro) |
+| HEX0 | Dígito predito (0–9) |
+| HEX5 | Estado atual do sistema (`r`=pronto, `b`=ocupado, `d`=done, `e`=erro) |
 
 ### Passo 1 — Programar a FPGA
 
