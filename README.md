@@ -644,7 +644,7 @@ O banco de registradores mapeia os sinais de controle e leitura do co-processado
 | Registrador | Offset | Bits                                          | R/W | Descrição |
 |-------------|--------|-----------------------------------------------|-----|-----------|
 | CTRL        | 0x00   | [9:7]=opcode, [6:3]=addr parcial, [2:0]=dado  | W   | Instrução completa via SW+BTN |
-| STATUS      | 0x04   | [0]=ready, [1]=busy, [2]=done, [3]=error      | R   | Estado atual do sistema |
+| STATUS      | 0x04   | [3]=ready, [2]=busy, [0]=done, [1]=error      | R   | Estado atual do sistema |
 | RESULT      | 0x08   | [3:0]=pred                                    | R   | Dígito predito (0–9), válido quando done=1 |
 | CYCLES      | 0x0C   | [31:0]                                        | R   | Ciclos da última inferência |
 
