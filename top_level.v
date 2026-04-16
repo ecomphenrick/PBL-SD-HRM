@@ -1,11 +1,8 @@
 module top_level (
-    // --- Globais ---
     input  wire        clk,
     input  wire        reset,
-    // --- FSM ---
     input  wire        btn,
-    input  wire [9:0]  sw,              // atualizado de 3 para 10 bits (atualizar pin assignments)
-    // --- LEDs ---
+    input  wire [9:0]  sw,             
     output wire        led_w,
     output wire        led_bias,
     output wire        led_beta,
@@ -14,29 +11,24 @@ module top_level (
     output wire        led_busy,
     output wire        led_done,
     output wire        led_error,
-    // --- Display 7 segmentos ---
     output wire [6:0]  hex0,
     output wire [6:0]  hex1,
     output wire [6:0]  hex2,
     output wire [6:0]  hex3,
     output wire [6:0]  hex4,
     output wire [6:0]  hex5,
-    // --- Bias (RAM 128x16) --- mantidas para compatibilidade com pin assignments
     input  wire [6:0]  bias_addr,
     input  wire [15:0] bias_data,
     input  wire        bias_wren,
     output wire [15:0] bias_q,
-    // --- Pesos (RAM 100352x16) ---
     input  wire [16:0] pesos_addr,
     input  wire [15:0] pesos_data,
     input  wire        pesos_wren,
     output wire [15:0] pesos_q,
-    // --- Beta (RAM 1280x16) ---
     input  wire [10:0] beta_addr,
     input  wire [15:0] beta_data,
     input  wire        beta_wren,
     output wire [15:0] beta_q,
-    // --- Img (RAM 784x16) ---
     input  wire [9:0]  img_addr,
     input  wire [15:0] img_data,
     input  wire        img_wren,
@@ -46,13 +38,11 @@ module top_level (
     wire [3:0] pred;
     wire       inferencia_ativa;
 
-    // Endereços de leitura do pbl_infer
     wire [16:0] pbl_w_addr;
     wire [6:0]  pbl_b_addr;
     wire [10:0] pbl_beta_rd_addr;
     wire [9:0]  pbl_img_rd_addr;
 
-    // Escrita via ISA (pbl_ctrl)
     wire [9:0]  ctrl_img_addr;
     wire [15:0] ctrl_img_data;
     wire        ctrl_img_wren;
@@ -66,15 +56,7 @@ module top_level (
     wire [15:0] ctrl_beta_data;
     wire        ctrl_beta_wren;
 
-    // Snapshot para display
     wire disp_ready, disp_busy, disp_done, disp_error;
-
-    // =========================================================================
-    // Mux de acesso às RAMs
-    // Prioridade 1: inferencia_ativa  → pbl_infer lê
-    // Prioridade 2: ctrl_*_wren       → pbl_ctrl escreve via ISA
-    // Prioridade 3: externo           → portas originais (JTAG, fallback)
-    // =========================================================================
 
     wire [9:0]  img_addr_mux   = inferencia_ativa ? pbl_img_rd_addr  :
                                   ctrl_img_wren   ? ctrl_img_addr    : img_addr;
@@ -104,9 +86,7 @@ module top_level (
     wire        beta_wren_mux  = inferencia_ativa ? 1'b0             :
                                   ctrl_beta_wren  ? 1'b1             : beta_wren;
 
-    // =========================================================================
-    // Instâncias
-    // =========================================================================
+   
     pbl u_pbl (
         .clk              (clk),
         .reset            (~reset),

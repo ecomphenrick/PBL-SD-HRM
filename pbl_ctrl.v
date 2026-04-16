@@ -3,10 +3,8 @@ module pbl_ctrl (
     input  wire        reset,
     input  wire        btn,
     input  wire [9:0]  sw,
-    // --- Sinais da inferência ---
     input  wire        infer_done,
     input  wire        infer_error,
-    // --- LEDs de status ---
     output reg         led_w,
     output reg         led_bias,
     output reg         led_beta,
@@ -15,56 +13,39 @@ module pbl_ctrl (
     output reg         led_busy,
     output reg         led_done,
     output reg         led_error,
-    // --- Snapshot para o display (opcode STATUS + btn) ---
     output reg         disp_ready,
     output reg         disp_busy,
     output reg         disp_done,
     output reg         disp_error,
-    // --- Escrita na RAM IMG ---
     output reg  [9:0]  ctrl_img_addr,
     output reg  [15:0] ctrl_img_data,
     output reg         ctrl_img_wren,
-    // --- Escrita na RAM Pesos ---
     output reg  [16:0] ctrl_pesos_addr,
     output reg  [15:0] ctrl_pesos_data,
     output reg         ctrl_pesos_wren,
-    // --- Escrita na RAM Bias ---
     output reg  [6:0]  ctrl_bias_addr,
     output reg  [15:0] ctrl_bias_data,
     output reg         ctrl_bias_wren,
-    // --- Escrita na RAM Beta ---
     output reg  [10:0] ctrl_beta_addr,
     output reg  [15:0] ctrl_beta_data,
     output reg         ctrl_beta_wren,
-    // --- Controle ---
     output reg         start,
     output wire        inferencia_ativa
 );
 
-    // =========================================================================
-    // Decodificação da instrução
-    // SW[2:0] = opcode (direita)
-    // SW[6:3] = endereço
-    // SW[9:7] = dado (esquerda)
-    // =========================================================================
+
     wire [2:0]  opcode = sw[2:0];
     wire [3:0]  iaddr  = sw[6:3];
     wire [2:0]  idado  = sw[9:7];
 
-    // =========================================================================
-    // Opcodes
-    // =========================================================================
+   
     localparam OP_WRITE_W    = 3'b000;
     localparam OP_WRITE_BIAS = 3'b001;
     localparam OP_WRITE_BETA = 3'b010;
     localparam OP_WRITE_IMG  = 3'b011;
-    // 100, 101 reservados
     localparam OP_STATUS     = 3'b110;
     localparam OP_START      = 3'b111;
 
-    // =========================================================================
-    // Estados
-    // =========================================================================
     localparam READY = 3'd0;
     localparam BUSY  = 3'd1;
     localparam DONE  = 3'd2;
@@ -109,7 +90,6 @@ module pbl_ctrl (
             start           <= 0;
         end else begin
             btn_prev        <= btn;
-            // Pulsos: zerados todo ciclo
             start           <= 0;
             ctrl_img_wren   <= 0;
             ctrl_pesos_wren <= 0;
@@ -167,7 +147,7 @@ module pbl_ctrl (
                                 end
                             end
 
-                            default: ; // 100, 101 reservados
+                            default: ;
 
                         endcase
                     end

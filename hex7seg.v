@@ -1,7 +1,6 @@
 module hex7seg (
     input  wire        en,
     input  wire [3:0]  digit,
-    // --- novo: sinais de estado ---
     input  wire        led_ready,
     input  wire        led_busy,
     input  wire        led_done,
@@ -13,11 +12,7 @@ module hex7seg (
     output reg  [6:0]  seg4,
     output reg  [6:0]  seg5
 );
-    // Codificação 7 segmentos, ativo-baixo: bits = {g, f, e, d, c, b, a}
-    // r minúsculo : segmentos e, g          → 7'b0101111
-    // b minúsculo : segmentos c, d, e, f, g → 7'b0000011
-    // d minúsculo : segmentos b, c, d, e, g → 7'b0100001
-    // e minúsculo : segmentos a, d, e, f, g → 7'b0000110
+
 
     always @(*) begin
         // hex1–hex4 sempre apagados
@@ -46,7 +41,6 @@ module hex7seg (
         end
 
         // --- hex5: letra do estado atual ---
-        // Prioridade: error > done > busy > ready
         if      (led_error) seg5 = 7'b0000110; // e
         else if (led_done)  seg5 = 7'b0100001; // d
         else if (led_busy)  seg5 = 7'b0000011; // b

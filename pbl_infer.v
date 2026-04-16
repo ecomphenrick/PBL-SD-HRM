@@ -1,8 +1,8 @@
 module pbl_infer (
     input  wire        clk,
     input  wire        reset,
-    input  wire        start,           // pulso de 1 ciclo vindo do pbl_ctrl
-    // --- Interface RAMs ---
+    input  wire        start,           
+
     output reg  [16:0] w_addr,
     input  wire [15:0] w_q,
     output reg  [6:0]  b_addr,
@@ -11,10 +11,9 @@ module pbl_infer (
     input  wire [15:0] beta_rd_q,
     output reg  [9:0]  img_rd_addr,
     input  wire [15:0] img_rd_q,
-    // --- Resultados ---
     output reg  [3:0]  pred,
-    output reg         done,            // pulso de 1 ciclo ao terminar
-    output reg         error            // pulso de 1 ciclo em caso de erro
+    output reg         done,            
+    output reg         error            
 );
 
     localparam integer D      = 784;
@@ -24,11 +23,8 @@ module pbl_infer (
     localparam integer ACC_W  = 32;
     localparam integer Q_FRAC = 12;
 
-    // =========================================================================
-    // Fases
-    // =========================================================================
     localparam [4:0] PH_IDLE         = 5'd0;
-    localparam [4:0] PH_CLEAR        = 5'd1;  // limpa h_mem e y_mem antes de calcular
+    localparam [4:0] PH_CLEAR        = 5'd1;  
     localparam [4:0] PH_H_ADDR       = 5'd2;
     localparam [4:0] PH_H_WAIT0      = 5'd3;
     localparam [4:0] PH_H_WAIT1      = 5'd4;
@@ -49,7 +45,7 @@ module pbl_infer (
     reg [$clog2(D)-1:0] in_idx;
     reg [$clog2(H)-1:0] hid_idx;
     reg [$clog2(C)-1:0] cls_idx;
-    reg [$clog2(H)-1:0] clear_idx;  // contador dedicado para PH_CLEAR
+    reg [$clog2(H)-1:0] clear_idx;  
 
     reg signed [DATA_W-1:0] h_mem [0:H-1];
     reg signed [ACC_W-1:0]  y_mem [0:C-1];
