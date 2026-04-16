@@ -598,9 +598,41 @@ Os displays da DE1-SoC são **ativos em nível baixo** — bit 0 significa segme
 Para visualizar como tudo se conecta:
 
 ```
-Usuário pressiona KEY[1] com SW=011 (WRITE_IMG)
+As 4 confirmações podem ser feitas em qualquer ordem:
+
+Usuário pressiona KEY[1] com SW=000 (WRITE_W)
     ↓
 btn_pulse = 1  (por 1 ciclo)
+    ↓
+pbl_ctrl → ctrl_pesos_wren = 1
+    ↓
+top_level mux → pesos_wren_mux = 1  (pois inferencia_ativa=0)
+    ↓
+RAM Pesos recebe escrita
+    ↓
+pbl_ctrl → led_w = 1  (permanente)
+    ↓
+LEDR[9] acende na placa
+
+─────────────────────────────────────────────
+
+Usuário pressiona KEY[1] com SW=001 (WRITE_BIAS)
+    ↓
+pbl_ctrl → ctrl_bias_wren = 1 → RAM Bias recebe escrita
+    ↓
+led_bias = 1 → LEDR[8] acende
+
+─────────────────────────────────────────────
+
+Usuário pressiona KEY[1] com SW=010 (WRITE_BETA)
+    ↓
+pbl_ctrl → ctrl_beta_wren = 1 → RAM Beta recebe escrita
+    ↓
+led_beta = 1 → LEDR[7] acende
+
+─────────────────────────────────────────────
+
+Usuário pressiona KEY[1] com SW=011 (WRITE_IMG)
     ↓
 pbl_ctrl → ctrl_img_wren = 1
     ↓
@@ -610,11 +642,11 @@ RAM IMG recebe escrita
     ↓
 pbl_ctrl → led_img = 1  (permanente)
     ↓
-LEDR[3] acende na placa
+LEDR[6] acende na placa
 
 ─────────────────────────────────────────────
 
-Usuário pressiona KEY[2] (START)
+Com LEDR[9], [8], [7] e [6] todos acesos → Usuário executa SW=111 + KEY[1] (START)
     ↓
 pbl_ctrl → start = 1 (1 ciclo), inferencia_ativa = 1
     ↓
@@ -622,7 +654,7 @@ top_level mux → todas as RAMs agora apontam para pbl_infer
     ↓
 pbl_ctrl → led_busy = 1, disp_busy = 1
     ↓
-LEDR[5] acende, HEX5 exibe 'b'
+LEDR[2] acende, HEX5 exibe 'b'
     ↓
 pbl_infer → LIMPAR → camada oculta → camada saída → ARGMAX
     ↓
@@ -632,7 +664,7 @@ pbl_ctrl captura infer_done → led_done = 1, disp_done = 1
     ↓
 inferencia_ativa = 0  (RAMs liberadas)
     ↓
-LEDR[6] acende, HEX5 exibe 'd', HEX0 exibe o dígito
+LEDR[0] acende, HEX5 exibe 'd', HEX0 exibe o dígito
 ```
 
 ---
@@ -643,7 +675,7 @@ O banco de registradores mapeia os sinais de controle e leitura do co-processado
 
 | Registrador | Offset | Bits                                          | R/W | Descrição |
 |-------------|--------|-----------------------------------------------|-----|-----------|
-| CTRL        | 0x00   | [9:7]=opcode, [6:3]=addr parcial, [2:0]=dado  | W   | Instrução completa via SW+BTN |
+| CTRL        | 0x00   | [2:0]=opcode, [6:3]=addr parcial, [9:7]=dado  | W   | Instrução completa via SW+BTN |
 | STATUS      | 0x04   | [3]=ready, [2]=busy, [0]=done, [1]=error      | R   | Estado atual do sistema |
 | RESULT      | 0x08   | [3:0]=pred                                    | R   | Dígito predito (0–9), válido quando done=1 |
 | CYCLES      | 0x0C   | [31:0]                                        | R   | Ciclos da última inferência |
@@ -651,6 +683,13 @@ O banco de registradores mapeia os sinais de controle e leitura do co-processado
 O protocolo **Start → Execute → Done** funciona assim:
 
 ```
+0. Armazenar dados (pré-requisito — ordem não importa):
+   SW=000, KEY[1]  →  confirma W_in   →  LEDR[9] acende
+   SW=001, KEY[1]  →  confirma Bias   →  LEDR[8] acende
+   SW=010, KEY[1]  →  confirma Beta   →  LEDR[7] acende
+   SW=011, KEY[1]  →  confirma IMG    →  LEDR[6] acende
+   (as quatro confirmações podem ser feitas em qualquer ordem)
+
 1. SW=111, pressiona KEY[1]  →  pbl_ctrl pulsa start=1 por 1 ciclo
                               →  inferencia_ativa sobe
                               →  STATUS = BUSY, led_busy acende, HEX5='b'
@@ -668,23 +707,6 @@ O reset é assíncrono e ativo alto internamente. Como os botões da DE1-SoC sã
 
 ---
 
-## Paralelismo dos MACs
-
-O projeto instancia dois módulos `mac_q412` simultaneamente — `u_mac_hidden` e `u_mac_output`. Os dois calculam em paralelo a cada ciclo, mas a FSM usa um por camada (não ambos ao mesmo tempo na mesma fase).
-
-O impacto real em ciclos:
-
-| Configuração         | MACs por ciclo | Ciclos totais  |
-|----------------------|----------------|----------------|
-| 1 MAC serial         | 1              | ~305.694       |
-| 2 MACs (atual)       | 1 por fase     | ~305.694       |
-| N MACs paralelos     | N              | ~305.694 / N   |
-
-O ganho dos 2 MACs atuais é eliminação de latência na troca de camada, não redução de ciclos por operação. Para throughput > 1 MAC/ciclo dentro da mesma fase seria necessário replicar MACs com contadores paralelos e redesenhar a FSM — extensão natural para trabalhos futuros.
-
-O valor real de ciclos é medido pelo `cycles_out[31:0]`, exposto como saída do `top_level` e acessível via **Tools → In-System Sources and Probes** no Quartus após síntese.
-
----
 
 ## Latência e Uso de Recursos
 
@@ -703,18 +725,26 @@ A 50 MHz (período 20 ns): **~6,1 ms por inferência**.
 
 A latência é **estritamente determinística** — o mesmo número de ciclos para qualquer imagem, pois a FSM percorre sempre as mesmas fases sem nenhum branch condicional sobre os dados. O `cycles_out` confirma isso: duas inferências consecutivas com imagens diferentes produzem exatamente o mesmo valor de ciclos.
 
-### Uso de recursos (estimativa analítica)
+### Uso de recursos
 
-| Recurso | Estimativa   | Limite EP4CGX150 | Por quê                               |
-|---------|-------------|------------------|---------------------------------------|
-| LUT     | < 5.000     | 20.000           | FSM (16 fases) + muxes das 4 RAMs     |
-| FF      | < 3.000     | 20.000           | Registradores da FSM + h_mem (128×16b)|
-| DSP     | 2           | 50               | Um bloco por instância de mac_q412    |
-| BRAM    | ~52 blocos  | 100              | Pesos domina: 100k palavras ≈ 13 M10K |
+Os valores abaixo são os resultados reais após síntese completa no Quartus Prime 25.1 para o dispositivo **EP4CGX150** (Cyclone V GX):
 
-Os dois MACs mapeiam nos DSPs dedicados do Cyclone V — sem gastar LUT em multiplicação. A RAM `Pesos` com 100.352 × 16 bits (≈ 1,6 MB) é o recurso dominante e usa a maior parte dos M10K disponíveis.
+| Recurso                      | Uso real  | Limite EP4CGX150 | Observação |
+|------------------------------|-----------|------------------|------------|
+| ALMs (lógica estimada)       | 2.334     | ~150.000         | FSM + muxes das 4 RAMs |
+| ALUT combinacional           | 2.708     | —                | Inclui 1.497 funções de 6 entradas |
+| Registradores lógicos        | 2.737     | ~300.000         | FSM + h_mem (128×16b) |
+| DSP Blocks                   | 4         | 288              | 2 por instância de mac_q412 |
+| Block memory bits            | 1.640.704 | ~6.500.000       | ~200 KB — Pesos domina |
+| I/O pins                     | 272       | —                | — |
 
-Os valores reais saem do **Compilation Report → Flow Summary** e a frequência máxima do **TimeQuest Timing Analyzer** após síntese completa no Quartus.
+O uso de memória de bloco corresponde a aproximadamente **52 blocos M10K** (cada M10K tem 10.240 bits × 2 portas = 20.480 bits). A RAM `Pesos` com 100.352 × 16 bits ≈ 1,6 MB é o recurso dominante.
+
+Os 4 blocos DSP (2 por instância de `mac_q412`) mapeiam os multiplicadores 16×16 nos DSPs dedicados do Cyclone V, sem gastar LUT em multiplicação.
+
+A frequência máxima de operação é obtida pelo **TimeQuest Timing Analyzer** após síntese completa.
+
+![Relatório de recursos do Quartus](assets/recursos_quartus.png)
 
 ---
 
@@ -733,102 +763,107 @@ Os valores reais saem do **Compilation Report → Flow Summary** e a frequência
 |----------|--------|
 | KEY[0]   | Reset geral (ativo baixo) |
 | KEY[1]   | Executa instrução das chaves (ativo baixo) |
-| KEY[2]   | Dispara inferência diretamente (ativo baixo) |
 | SW[2:0]  | Opcode da instrução |
 
-| LED     | Indica |
+| LED      | Indica |
+|----------|--------|
+| LEDR[9]  | W_in confirmado |
+| LEDR[8]  | Bias confirmado |
+| LEDR[7]  | Beta confirmado |
+| LEDR[6]  | Imagem confirmada |
+| LEDR[3]  | Sistema pronto |
+| LEDR[2]  | Inferência em andamento |
+| LEDR[1]  | Erro |
+| LEDR[0]  | Resultado disponível |
+
+| Display | Indica |
 |---------|--------|
-| LEDR[0] | W_in confirmado |
-| LEDR[1] | Bias confirmado |
-| LEDR[2] | Beta confirmado |
-| LEDR[3] | Imagem confirmada |
-| LEDR[4] | Sistema pronto |
-| LEDR[5] | Inferência em andamento |
-| LEDR[6] | Resultado disponível |
-| LEDR[7] | Erro |
+| HEX0    | Dígito predito (0–9) |
+| HEX5    | Estado atual do sistema (`r`=pronto, `b`=ocupado, `d`=done, `e`=erro) |
 
 ### Passo 1 — Programar a FPGA
 
 1. Abra o Quartus Prime e compile o projeto (**Processing → Start Compilation**)
 2. Conecte o USB-Blaster à DE1-SoC e ligue a placa
 3. Vá em **Tools → Programmer**, adicione o arquivo `.sof` e clique em **Start**
-4. Aguarde 100% — a placa inicializa com HEX5 exibindo `r` e LEDR[4] aceso
+4. Aguarde 100% — a placa inicializa com HEX5 exibindo `r` e LEDR[3] aceso (caso solicide status)
 
-### Passo 2 — Carregar os pesos via JTAG
+### Passo 2 — Confirmar carregamento via chaves
 
-Abra **Tools → In-System Memory Content Editor** e para cada memória:
+Para cada memória, posicione as chaves SW conforme a tabela e pressione KEY[1]:
 
-| Instância | Arquivo      | SW para confirmar | KEY[1] | LED que acende |
-|-----------|-------------|-------------------|--------|----------------|
-| `Peso`    | W_in_q.mif  | SW = `000`        | 1×     | LEDR[0]        |
-| `Bias`    | b_q.mif     | SW = `001`        | 1×     | LEDR[1]        |
-| `Beta`    | beta_q.mif  | SW = `010`        | 1×     | LEDR[2]        |
-| `IMG`     | imagem.mif  | SW = `011`        | 1×     | LEDR[3]        |
+| Instância | Arquivo      | SW | KEY[1] | LED que acende |
+|-----------|-------------|-----|--------|----------------|
+| `Peso`    | W_in_q.mif  | `000` | 1×   | LEDR[9]        |
+| `Bias`    | b_q.mif     | `001` | 1×   | LEDR[8]        |
+| `Beta`    | beta_q.mif  | `010` | 1×   | LEDR[7]        |
+| `IMG`     | imagem.mif  | `011` | 1×   | LEDR[6]        |
 
-Para cada linha:
-1. Clique na instância no Memory Content Editor
-2. Botão direito → **Import Data from File** → selecione o `.mif`
-3. Na placa, posicione as chaves SW conforme a tabela
-4. Pressione KEY[1] uma vez
-5. Verifique o LED correspondente acendendo
+> O start só será aceito quando LEDR[9], [8], [7] e [6] estiverem todos acesos. Se tentar disparar com algum faltando, o sistema dará erro (LEDR[1] acende, HEX5 exibe `e`).
 
-Quando LEDR[0], [1], [2] e [3] estiverem todos acesos, todos os dados estão confirmados.
+### Passo 3 — Carregar os dados via JTAG
 
-### Passo 3 — Executar a inferência
+Abra **Tools → In-System Memory Content Editor**. Para cada instância:
 
-Pressione **KEY[2]**.
+1. Clique na instância na lista
+2. Botão direito → **Write Data to In-System Memory** → selecione o arquivo `.mif`
 
-- LEDR[5] acende, HEX5 exibe `b` → inferência rodando (~6 ms)
-- LEDR[6] acende, HEX5 exibe `d`, HEX0 exibe o dígito → pronto
+| Instância | Arquivo      |
+|-----------|-------------|
+| `Peso`    | W_in_q.mif  |
+| `Bias`    | b_q.mif     |
+| `Beta`    | beta_q.mif  |
+| `IMG`     | imagem.mif  |
 
-Para classificar outra imagem: repita o Passo 2 só para a instância `IMG` (os pesos não precisam ser recarregados), depois pressione KEY[2] de novo.
+### Passo 4 — Executar a inferência
 
-### Passo 4 — Em caso de erro
+Com todos os LEDs de dados acesos, execute SW=111 + KEY[1] para disparar.
 
-Se LEDR[7] acender e HEX5 exibir `e`: pressione KEY[0] para resetar e repita tudo do Passo 2. A causa mais comum é pressionar KEY[2] antes de confirmar todos os dados.
+- LEDR[2] acende, HEX5 exibe `b` → inferência rodando (~6 ms)
+- LEDR[0] acende, HEX5 exibe `d`, HEX0 exibe o dígito → pronto
+
+Para classificar outra imagem: repita o Passo 3 só para a instância `IMG`, confirme com SW=011 + KEY[1], depois dispare novamente.
+
+### Passo 5 — Em caso de erro
+
+Se LEDR[1] acender e HEX5 exibir `e`: pressione KEY[0] para resetar e repita a partir do Passo 2.
 
 ### Resumo
 
 ```
 Compilar → programar .sof
     ↓
-Memory Content Editor:
-  Peso  → W_in_q.mif  → SW=000 → KEY[1] → LEDR[0] ✓
-  Bias  → b_q.mif     → SW=001 → KEY[1] → LEDR[1] ✓
-  Beta  → beta_q.mif  → SW=010 → KEY[1] → LEDR[2] ✓
-  IMG   → imagem.mif  → SW=011 → KEY[1] → LEDR[3] ✓
+JTAG (Memory Content Editor → Write):
+  Peso  → W_in_q.mif
+  Bias  → b_q.mif
+  Beta  → beta_q.mif
+  IMG   → imagem.mif
     ↓
-KEY[2] → HEX5='b' → aguarda → HEX5='d', HEX0=resultado
+Confirmar via chaves:
+  SW=000 → KEY[1] → LEDR[9] ✓
+  SW=001 → KEY[1] → LEDR[8] ✓
+  SW=010 → KEY[1] → LEDR[7] ✓
+  SW=011 → KEY[1] → LEDR[6] ✓
+    ↓
+SW=111 → KEY[1] → LEDR[2] acende → aguarda → LEDR[0] acende, HEX0=resultado
 ```
 
 ---
 
 ## Testes e Resultados
 
-### Simulação
+### Testes Funcionais
 
-O testbench instancia o `top_level` completo e simula o protocolo completo de uso:
-
-```verilog
-// Ciclo completo de teste
-reset = 1; @(posedge clk); reset = 0;
-
-// Confirma carregamentos (pesos já nos .mif)
-send_instr(OP_WRITE_W,    0, 0);   // SW=000, KEY[1]
-send_instr(OP_WRITE_BIAS, 0, 0);   // SW=001
-send_instr(OP_WRITE_BETA, 0, 0);   // SW=010
-send_instr(OP_WRITE_IMG,  0, 0);   // SW=011
-
-// Dispara inferência
-send_instr(OP_START, 0, 0);
-
-// Polling até done
-wait(led_done == 1);
-
-// Valida resultado
-assert(pred === expected_digit);
-$display("Ciclos: %0d | Pred: %0d | Esperado: %0d", cycles_out, pred, expected_digit);
-```
+A validação do sistema foi realizada diretamente em bancada utilizando a placa DE1-SoC, permitindo observar o comportamento do hardware em execução real. Os testes tiveram como objetivo verificar o correto funcionamento das etapas de carregamento de dados, controle do processamento e geração do resultado final.
+Inicialmente, foi analisado o processo de escrita nas memórias MEM_IMG, MEM_WIN e MEM_BIAS, responsáveis por armazenar respectivamente a imagem de entrada, os pesos da rede e os valores de bias. Durante essa etapa, verificou-se se os dados estavam sendo corretamente armazenados e se os sinais de controle associados ao término da escrita eram ativados conforme esperado.
+Em seguida, foi validado o mecanismo de início da inferência por meio do sinal START, garantindo que o processamento fosse iniciado apenas após a conclusão do carregamento de todos os dados necessários. Durante a execução do sistema, foi possível acompanhar a evolução dos estados de controle, observando a transição do estado READY para BUSY, e posteriormente para DONE, indicando a finalização do processamento.
+Também foi analisado o comportamento da máquina de estados finitos (FSM) responsável pelo controle do fluxo de execução. Nessa verificação, confirmou-se que as etapas de leitura das memórias, execução das operações na unidade MAC (Multiply-Accumulate) e armazenamento dos resultados intermediários estavam sendo realizadas na sequência correta. Ao final do processamento, o resultado da inferência foi exibido nos displays da placa, permitindo a confirmação visual da saída gerada pelo sistema.
+Problemas Identificados e Correções
+Durante o processo de testes, alguns problemas foram identificados e corrigidos ao longo do desenvolvimento do sistema.
+Inicialmente, observou-se que a saída da unidade MAC permanecia constantemente em zero, mesmo com os dados corretamente carregados nas memórias. Após análise do funcionamento do controle do sistema, verificou-se que o sinal responsável por habilitar a unidade MAC não estava sendo ativado no momento adequado pela máquina de estados. A correção foi realizada ajustando a lógica de controle da FSM, garantindo que o sinal de habilitação fosse acionado durante os ciclos de cálculo.
+Validação Final
+Após a realização das correções identificadas durante os testes, o sistema passou a apresentar comportamento estável e consistente na execução em hardware. O processo de inferência é iniciado corretamente após o acionamento do sinal de START, os cálculos são executados conforme esperado pela arquitetura implementada e o resultado final é exibido adequadamente nos displays da placa.
+Com isso, foi possível validar o funcionamento completo do coprocessador desenvolvido, desde o carregamento dos dados nas memórias até a obtenção da predição final realizada pelo sistema.
 
 Vetores de teste do MNIST cobrindo os 10 dígitos foram comparados contra um golden model Python (float64). Acurácia confirmada acima de 90%.
 
