@@ -744,7 +744,7 @@ Os 4 blocos DSP (2 por instância de `mac_q412`) mapeiam os multiplicadores 16×
 
 A frequência máxima de operação é obtida pelo **TimeQuest Timing Analyzer** após síntese completa.
 
-![Relatório de recursos do Quartus](assets/recursos_quartus.png)
+![Relatório de recursos do Quartus](png/resource.jpeg)
 
 ---
 
